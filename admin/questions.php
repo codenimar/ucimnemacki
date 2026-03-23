@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param('iissiii', $tId,$type,$qText,$cAns,$pts,$order,$hint);
             $stmt->execute(); $qId = $db->insert_id; $stmt->close();
             logAdminAction($adminId,'create','questions',$qId);
-            $msg = 'Pitanje kreiran.';
+            $msg = 'Pitanje kreirano.';
         }
 
         // Save options

@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Delete
 if ($action === 'delete_cat') {
     $id = (int)($_GET['id'] ?? 0);
-    if ($id) { $db->prepare('DELETE FROM categories WHERE id=?')->execute(); logAdminAction($adminId,'delete','categories',$id); }
+    if ($id) { $stmt=$db->prepare('DELETE FROM categories WHERE id=?'); $stmt->bind_param('i',$id); $stmt->execute(); $stmt->close(); logAdminAction($adminId,'delete','categories',$id); }
     header('Location: ' . SITE_URL . '/admin/categories.php?msg=Obrisano'); exit;
 }
 if ($action === 'delete_sub') {

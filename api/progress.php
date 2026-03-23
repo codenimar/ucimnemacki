@@ -31,7 +31,6 @@ switch ($action ?: ($postData['action'] ?? '')) {
         awardPoints($userId, $score);
 
         // Update streak
-        $db->prepare('UPDATE users SET streak = streak + 1 WHERE id = ?')->execute() ?: null;
         $upd = $db->prepare('UPDATE users SET streak = streak + 1 WHERE id = ?');
         $upd->bind_param('i', $userId);
         $upd->execute(); $upd->close();
