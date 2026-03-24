@@ -69,7 +69,7 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="admin-layout">
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 class="admin-page-title">👨‍🏫 Živi Nastavnici</h1>
+        <h1 class="admin-page-title">👨‍🏫 Nastavnici</h1>
         <?php if ($msg):   ?><div class="alert alert-success"><?= sanitize($msg) ?></div><?php endif; ?>
         <?php if ($error): ?><div class="alert alert-error"><?= sanitize($error) ?></div><?php endif; ?>
 
