@@ -1,0 +1,10 @@
+uploads/images/*
+uploads/audio/*
+!uploads/images/.gitkeep
+!uploads/audio/.gitkeep
+*.log
+.env
+config/local.php
+node_modules/
+.DS_Store
+Thumbs.db
