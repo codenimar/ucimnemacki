@@ -49,10 +49,6 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="hero-stat-num" data-count="<?= $stats['vocab'] ?>"><?= $stats['vocab'] ?></div>
                 <div class="hero-stat-label">Reči u vokabularu</div>
             </div>
-            <div class="hero-stat">
-                <div class="hero-stat-num">100%</div>
-                <div class="hero-stat-label">Besplatno</div>
-            </div>
         </div>
     </div>
 </section>
