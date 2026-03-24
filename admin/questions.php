@@ -49,6 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Clear old options
             $del = $db->prepare('DELETE FROM question_options WHERE question_id=?');
             $del->bind_param('i',$qId); $del->execute(); $del->close();
+            // For type 8: also clear old option images
+            if ($type === 8) {
+                $delMed = $db->prepare("DELETE FROM question_media WHERE question_id=? AND display_context LIKE 'option_%'");
+                $delMed->bind_param('i',$qId); $delMed->execute(); $delMed->close();
+            }
             logAdminAction($adminId,'update','questions',$qId);
             $msg = 'Pitanje ažurirano.';
         } else {
@@ -86,6 +91,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        // Type 8: save 4 option records + option images
+        if ($type === 8) {
+            $correctImg = (int)($_POST['correct_option_img'] ?? 0);
+            for ($i = 0; $i < 4; $i++) {
+                $label = 'Slika ' . ($i + 1);
+                $isCor = ($i === $correctImg) ? 1 : 0;
+                $ins = $db->prepare('INSERT INTO question_options (question_id,option_text,is_correct,sort_order) VALUES (?,?,?,?)');
+                $ins->bind_param('isii', $qId,$label,$isCor,$i); $ins->execute(); $ins->close();
+            }
+            if (!empty($_FILES['option_images']['name'])) {
+                foreach ($_FILES['option_images']['name'] as $idx => $name) {
+                    if (!is_int($idx) || $idx < 0 || $idx > 3) continue;
+                    if (empty($name)) continue;
+                    $file = [
+                        'name'     => $_FILES['option_images']['name'][$idx],
+                        'type'     => $_FILES['option_images']['type'][$idx],
+                        'tmp_name' => $_FILES['option_images']['tmp_name'][$idx],
+                        'error'    => $_FILES['option_images']['error'][$idx],
+                        'size'     => $_FILES['option_images']['size'][$idx],
+                    ];
+                    $path = uploadFile($file, 'image');
+                    if ($path) {
+                        $ctx = 'option_' . $idx;
+                        $ins = $db->prepare('INSERT INTO question_media (question_id,media_type,file_path,display_context) VALUES (?,\'image\',?,?)');
+                        $ins->bind_param('iss',$qId,$path,$ctx); $ins->execute(); $ins->close();
+                    }
+                }
+            }
+        }
+
         $testId = $tId;
     }
 }
@@ -118,6 +153,7 @@ $qTypes = [
     5=>'Popuni prazninu',
     6=>'Složi redosled',
     7=>'Tačno/Netačno',
+    8=>'Tekst + 4 slike',
 ];
 
 $pageTitle = 'Admin – Pitanja';
@@ -222,6 +258,23 @@ require_once __DIR__ . '/../includes/header.php';
                                 <option value="Netačno">Netačno</option>
                             </select>
                         </div>
+                    </div>
+
+                    <!-- Option Images (type 8: Tekst + 4 slike) -->
+                    <div id="optionImagesSection" class="hidden">
+                        <h4 style="margin:1rem 0 .5rem">Slike odgovora</h4>
+                        <?php for ($i=0;$i<4;$i++): ?>
+                        <div class="d-flex gap-2 mb-3" style="align-items:flex-start">
+                            <label class="d-flex align-center gap-1" style="white-space:nowrap;padding-top:1.8rem">
+                                <input type="radio" name="correct_option_img" value="<?= $i ?>" <?= $i === 0 ? 'checked' : '' ?>> Tačan
+                            </label>
+                            <div class="form-group" style="flex:1;margin:0">
+                                <label class="form-label">Opcija <?= $i+1 ?></label>
+                                <input type="file" name="option_images[]" class="form-control" accept="image/*" data-preview="optPreview<?= $i ?>">
+                                <div id="optPreview<?= $i ?>"></div>
+                            </div>
+                        </div>
+                        <?php endfor; ?>
                     </div>
 
                     <!-- Media uploads -->

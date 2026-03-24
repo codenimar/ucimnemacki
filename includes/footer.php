@@ -30,7 +30,7 @@
                     <li><a href="<?= SITE_URL ?>/pages/tests.php">Testovi</a></li>
                     <li><a href="<?= SITE_URL ?>/pages/vocabulary.php">Vokabular</a></li>
                     <li><a href="<?= SITE_URL ?>/pages/grammar.php">Gramatika</a></li>
-                    <li><a href="<?= SITE_URL ?>/pages/teachers.php">Živi nastavnici</a></li>
+                    <li><a href="<?= SITE_URL ?>/pages/teachers.php">Nastavnici</a></li>
                     <li><a href="<?= SITE_URL ?>/pages/leaderboard.php">Ranglist</a></li>
                 </ul>
             </div>

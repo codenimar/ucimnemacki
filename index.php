@@ -88,7 +88,7 @@ require_once __DIR__ . '/includes/header.php';
                 ['🎯', 'Interaktivni testovi', 'Sedam vrsta pitanja uključujući slike, audio i povlačenje'],
                 ['🔊', 'Audio izgovor', 'Pravilni izgovor nemačkih reči uz audio snimke'],
                 ['🏆', 'Dostignuća', 'Zarađujte značke i poene dok napredujete'],
-                ['👨‍🏫', 'Živi nastavnici', 'Rezervišite čas sa iskusnim nastavnicima nemačkog'],
+                ['👨‍🏫', 'Nastavnici', 'Rezervišite čas sa iskusnim nastavnicima nemačkog'],
                 ['📊', 'Praćenje napretka', 'Pratite svoja postignuća i statistike učenja'],
                 ['🌍', 'Gramatika', 'Detaljni vodiči za nemačku gramatiku na srpskom'],
                 ['📱', 'Mobilni prikaz', 'Učite na telefonu, tabletu ili računaru'],

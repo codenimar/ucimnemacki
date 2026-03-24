@@ -36,11 +36,12 @@ if (qTypeSelect) {
 
 function toggleQuestionFields(type) {
     const sections = {
-        choicesSection:  [1,2,3],
-        matchingSection: [4],
-        fillSection:     [5],
-        dragSection:     [6],
-        tfSection:       [7],
+        choicesSection:      [1,2,3],
+        matchingSection:     [4],
+        fillSection:         [5],
+        dragSection:         [6],
+        tfSection:           [7],
+        optionImagesSection: [8],
     };
     Object.entries(sections).forEach(([id, types]) => {
         const el = document.getElementById(id);

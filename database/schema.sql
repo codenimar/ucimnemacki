@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS questions (
     id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     test_id        SMALLINT UNSIGNED NOT NULL,
     type           TINYINT UNSIGNED NOT NULL DEFAULT 1
-                   COMMENT '1=img+4choice,2=text+4choice,3=audio+choice,4=matching,5=fill-blank,6=drag-order,7=true-false',
+                   COMMENT '1=img+4choice,2=text+4choice,3=audio+choice,4=matching,5=fill-blank,6=drag-order,7=true-false,8=text+4img-choice',
     question_text  TEXT NOT NULL,
     correct_answer TEXT DEFAULT NULL COMMENT 'for types 5,6,7 or JSON array for matching',
     points         TINYINT UNSIGNED NOT NULL DEFAULT 10,
