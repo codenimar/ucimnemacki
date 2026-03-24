@@ -110,6 +110,8 @@ class QuizEngine {
                 html += this._buildDragOrder(q); break;
             case 7:
                 html += this._buildTrueFalse(q); break;
+            case 8:
+                html += this._buildPictureChoices(q); break;
         }
 
         if (q.hint_text) {
@@ -172,6 +174,20 @@ class QuizEngine {
             <div id="matchRight">${rights.map((w, i) => `<div class="match-item" data-pair="${this._esc(w)}" id="mr${i}">${this._esc(w)}</div>`).join('')}</div>
         </div>
         <button class="btn btn-primary mt-3" onclick="quiz._submitMatching(${q.id})">Potvrdi sparivanje</button>`;
+    }
+
+    _buildPictureChoices(q) {
+        let html = '<div class="options-grid">';
+        q.options?.forEach((opt, i) => {
+            const media = q.media ? q.media.find(m => m.display_context === 'option_' + i) : null;
+            const imgHtml = media
+                ? `<img src="/uploads/${this._esc(media.file_path)}" alt="Opcija ${i + 1}" class="option-img">`
+                : `<span class="text-muted">Opcija ${i + 1}</span>`;
+            html += `<button class="option-btn option-btn--image" data-index="${i}" data-correct="${opt.is_correct}"
+                onclick="quiz._selectChoice(this, ${q.id})">${imgHtml}</button>`;
+        });
+        html += '</div>';
+        return html;
     }
 
     // ── Bind interaction (drag-drop) ───────────────

@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/functions.php';
 
-$pageTitle = 'Živi Nastavnici';
+$pageTitle = 'Nastavnici';
 $db        = getDB();
 $teachers  = $db->query('SELECT * FROM live_teachers ORDER BY name')->fetch_all(MYSQLI_ASSOC);
 
@@ -11,7 +11,7 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <section class="hero" style="padding:3rem 1.25rem 2.5rem">
     <div class="container hero-content">
-        <h1 style="color:#fff">👨‍🏫 Živi Nastavnici</h1>
+        <h1 style="color:#fff">👨‍🏫 Nastavnici</h1>
         <p class="hero-sub">Rezervišite privatni čas sa iskusnim nastavnicima nemačkog jezika</p>
     </div>
 </section>

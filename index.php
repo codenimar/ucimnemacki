@@ -26,7 +26,7 @@ require_once __DIR__ . '/includes/header.php';
             <img src="<?= SITE_URL ?>/assets/images/parrot.svg" alt="Učim Nemački papagaj maskota" width="160" height="160">
         </div>
         <h1 class="animate-slide-up">Naučite Nemački<br>na zabavan način! 🇩🇪</h1>
-        <p class="hero-sub animate-slide-up delay-1">Interaktivni testovi, vokabular, gramatika i živi nastavnici – sve na jednom mestu za srpske govornike.</p>
+        <p class="hero-sub animate-slide-up delay-1">Interaktivni testovi, vokabular, gramatika i nastavnici – sve na jednom mestu za srpske govornike.</p>
         <div class="hero-cta animate-slide-up delay-2">
             <?php if (isLoggedIn()): ?>
                 <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-xl" style="background:#fff;color:#6B21A8;">📝 Počni sa testovima</a>
@@ -88,7 +88,7 @@ require_once __DIR__ . '/includes/header.php';
                 ['🎯', 'Interaktivni testovi', 'Sedam vrsta pitanja uključujući slike, audio i povlačenje'],
                 ['🔊', 'Audio izgovor', 'Pravilni izgovor nemačkih reči uz audio snimke'],
                 ['🏆', 'Dostignuća', 'Zarađujte značke i poene dok napredujete'],
-                ['👨‍🏫', 'Živi nastavnici', 'Rezervišite čas sa iskusnim nastavnicima nemačkog'],
+                ['👨‍🏫', 'Nastavnici', 'Rezervišite čas sa iskusnim nastavnicima nemačkog'],
                 ['📊', 'Praćenje napretka', 'Pratite svoja postignuća i statistike učenja'],
                 ['🌍', 'Gramatika', 'Detaljni vodiči za nemačku gramatiku na srpskom'],
                 ['📱', 'Mobilni prikaz', 'Učite na telefonu, tabletu ili računaru'],
