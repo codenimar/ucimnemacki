@@ -202,15 +202,6 @@ require_once __DIR__ . '/../includes/header.php';
             document.getElementById('fcNum').textContent      = (fcIdx + 1) + ' / ' + fcWords.length;
             document.getElementById('mainFlashcard').classList.remove('flipped');
         }
-        document.getElementById('mainFlashcard').addEventListener('click', () => {
-            document.getElementById('mainFlashcard').classList.toggle('flipped');
-        });
-        document.getElementById('mainFlashcard').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                document.getElementById('mainFlashcard').classList.toggle('flipped');
-            }
-        });
         document.getElementById('fcNext').addEventListener('click', () => {
             fcIdx = (fcIdx + 1) % fcWords.length; renderFC();
         });

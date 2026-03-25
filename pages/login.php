@@ -71,4 +71,53 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
     </div>
 </div>
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php
+if (!empty(GOOGLE_CLIENT_ID)):
+    $gClientId = json_encode(GOOGLE_CLIENT_ID);
+    $gSiteUrl  = json_encode(SITE_URL);
+    $extraScripts = <<<HTML
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script>
+(function() {
+    var btn = document.getElementById('googleLoginBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+        if (typeof google === 'undefined' || !google.accounts) {
+            showToast('Google biblioteka se još uvek učitava. Pokušajte ponovo za trenutak.', 'warning');
+            return;
+        }
+        google.accounts.id.initialize({
+            client_id: {$gClientId},
+            callback: function(response) {
+                var form = new FormData();
+                form.append('id_token', response.credential);
+                fetch({$gSiteUrl} + '/api/auth.php?action=google', { method: 'POST', body: form })
+                    .then(function(r) { return r.json(); })
+                    .then(function(data) {
+                        if (data.success) {
+                            var params   = new URLSearchParams(window.location.search);
+                            var redirect = params.get('redirect') || '';
+                            var siteOrigin = new URL({$gSiteUrl}).origin;
+                            var dest;
+                            try {
+                                dest = redirect && new URL(redirect).origin === siteOrigin
+                                    ? redirect
+                                    : {$gSiteUrl} + '/pages/profile.php';
+                            } catch (e) {
+                                dest = {$gSiteUrl} + '/pages/profile.php';
+                            }
+                            window.location.href = dest;
+                        } else {
+                            showToast(data.message || 'Google prijava nije uspela.', 'error');
+                        }
+                    })
+                    .catch(function() { showToast('Mrežna greška. Proverite internet vezu.', 'error'); });
+            }
+        });
+        google.accounts.id.prompt();
+    });
+})();
+</script>
+HTML;
+endif;
+require_once __DIR__ . '/../includes/footer.php'; ?>
