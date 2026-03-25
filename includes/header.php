@@ -54,6 +54,7 @@ $siteRoot = SITE_URL;
             <li><a href="<?= $siteRoot ?>/pages/tests.php" class="nav-link <?= navActive('tests.php') ?>">Testovi</a></li>
             <li><a href="<?= $siteRoot ?>/pages/vocabulary.php" class="nav-link <?= navActive('vocabulary.php') ?>">Vokabular</a></li>
             <li><a href="<?= $siteRoot ?>/pages/grammar.php" class="nav-link <?= navActive('grammar.php') ?>">Gramatika</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/proficiency.php" class="nav-link <?= navActive('proficiency.php') ?>">Provera znanja</a></li>
             <li><a href="<?= $siteRoot ?>/pages/teachers.php" class="nav-link <?= navActive('teachers.php') ?>">Nastavnici</a></li>
             <li><a href="<?= $siteRoot ?>/pages/leaderboard.php" class="nav-link <?= navActive('leaderboard.php') ?>">Ranglist</a></li>
         </ul>
@@ -111,6 +112,7 @@ $siteRoot = SITE_URL;
             <li><a href="<?= $siteRoot ?>/pages/tests.php" class="mobile-nav-link">📝 Testovi</a></li>
             <li><a href="<?= $siteRoot ?>/pages/vocabulary.php" class="mobile-nav-link">📖 Vokabular</a></li>
             <li><a href="<?= $siteRoot ?>/pages/grammar.php" class="mobile-nav-link">✏️ Gramatika</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/proficiency.php" class="mobile-nav-link">🎓 Provera znanja</a></li>
             <li><a href="<?= $siteRoot ?>/pages/teachers.php" class="mobile-nav-link">👨‍🏫 Nastavnici</a></li>
             <li><a href="<?= $siteRoot ?>/pages/leaderboard.php" class="mobile-nav-link">🏆 Ranglist</a></li>
             <?php if ($isLoggedIn): ?>

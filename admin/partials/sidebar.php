@@ -12,10 +12,12 @@
         <a href="<?= SITE_URL ?>/admin/categories.php" class="admin-nav-link <?= basename($_SERVER['PHP_SELF'])==='categories.php'?'active':'' ?>"><span class="nav-icon">📂</span> Kategorije</a>
         <a href="<?= SITE_URL ?>/admin/tests.php"      class="admin-nav-link <?= basename($_SERVER['PHP_SELF'])==='tests.php'?'active':'' ?>"><span class="nav-icon">📝</span> Testovi</a>
         <a href="<?= SITE_URL ?>/admin/questions.php"  class="admin-nav-link <?= basename($_SERVER['PHP_SELF'])==='questions.php'?'active':'' ?>"><span class="nav-icon">❓</span> Pitanja</a>
+        <a href="<?= SITE_URL ?>/admin/grammar.php"    class="admin-nav-link <?= basename($_SERVER['PHP_SELF'])==='grammar.php'?'active':'' ?>"><span class="nav-icon">✏️</span> Gramatika</a>
     </div>
     <div class="admin-nav-section">
         <div class="admin-nav-label">Resursi</div>
         <a href="<?= SITE_URL ?>/admin/teachers.php"   class="admin-nav-link <?= basename($_SERVER['PHP_SELF'])==='teachers.php'?'active':'' ?>"><span class="nav-icon">👨‍🏫</span> Nastavnici</a>
+        <a href="<?= SITE_URL ?>/admin/proficiency.php" class="admin-nav-link <?= basename($_SERVER['PHP_SELF'])==='proficiency.php'?'active':'' ?>"><span class="nav-icon">🎓</span> Provera znanja</a>
     </div>
     <div class="admin-nav-section">
         <div class="admin-nav-label">Korisnici</div>

@@ -5,7 +5,17 @@ require_once __DIR__ . '/../includes/functions.php';
 
 $pageTitle = 'Nastavnici';
 $db        = getDB();
-$teachers  = $db->query('SELECT * FROM live_teachers ORDER BY name')->fetch_all(MYSQLI_ASSOC);
+$teachers  = $db->query(
+    'SELECT t.*, tc.name AS cat_name FROM live_teachers t
+     LEFT JOIN teacher_categories tc ON tc.id = t.teacher_category_id
+     ORDER BY tc.sort_order, tc.name, t.name'
+)->fetch_all(MYSQLI_ASSOC);
+
+// Group by category
+$byCategory = [];
+foreach ($teachers as $t) {
+    $byCategory[$t['cat_name'] ?? 'Ostalo'][] = $t;
+}
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
@@ -24,8 +34,13 @@ require_once __DIR__ . '/../includes/header.php';
             <h3>Nastavnici će uskoro biti dostupni</h3>
         </div>
         <?php else: ?>
-        <div class="grid grid-3">
-            <?php foreach ($teachers as $t):
+        <?php foreach ($byCategory as $catName => $catTeachers): ?>
+        <h2 style="margin-bottom:1.5rem;padding-bottom:.5rem;border-bottom:2px solid var(--border)">
+            📂 <?= sanitize($catName) ?>
+            <span class="badge badge-purple" style="font-size:.85rem;vertical-align:middle"><?= count($catTeachers) ?></span>
+        </h2>
+        <div class="grid grid-3 mb-5">
+            <?php foreach ($catTeachers as $t):
                 $subjects  = $t['subjects']  ? explode(',', $t['subjects'])  : [];
                 $languages = $t['languages'] ? explode(',', $t['languages']) : [];
                 $days      = $t['available_days'] ? explode(',', $t['available_days']) : [];
@@ -75,6 +90,7 @@ require_once __DIR__ . '/../includes/header.php';
             </div>
             <?php endforeach; ?>
         </div>
+        <?php endforeach; ?>
         <?php endif; ?>
 
         <!-- Info section -->
