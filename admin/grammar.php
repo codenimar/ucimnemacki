@@ -84,13 +84,13 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="admin-layout">
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 class="admin-page-title">✏️ Gramatika – Lekcije</h1>
+        <h1 class="admin-page-title"> Gramatika – Lekcije</h1>
         <?php if ($msg):   ?><div class="alert alert-success"><?= sanitize($msg) ?></div><?php endif; ?>
         <?php if ($error): ?><div class="alert alert-error"><?= sanitize($error) ?></div><?php endif; ?>
 
         <!-- Form -->
         <div class="card mb-4">
-            <div class="card-header"><?= $editLesson ? '✏️ Izmeni lekciju' : '➕ Nova lekcija' ?></div>
+            <div class="card-header"><?= $editLesson ? ' Izmeni lekciju' : ' Nova lekcija' ?></div>
             <div class="card-body">
                 <form method="POST">
                     <input type="hidden" name="csrf_token" value="<?= generateToken() ?>">
@@ -154,9 +154,9 @@ require_once __DIR__ . '/../includes/header.php';
                         <td><strong><?= sanitize($l['title']) ?></strong></td>
                         <td><span class="badge badge-purple"><?= sanitize($diffLabels[$l['difficulty']] ?? $l['difficulty']) ?></span></td>
                         <td class="table-actions">
-                            <a href="?action=edit&id=<?= (int)$l['id'] ?>" class="btn btn-outline btn-sm">✏️</a>
+                            <a href="?action=edit&id=<?= (int)$l['id'] ?>" class="btn btn-outline btn-sm"></a>
                             <a href="?action=delete&id=<?= (int)$l['id'] ?>" class="btn btn-danger btn-sm"
-                               onclick="return confirm('Obrisati lekciju \'<?= sanitize($l['title']) ?>\'?')">🗑️</a>
+                               onclick="return confirm('Obrisati lekciju \'<?= sanitize($l['title']) ?>\'?')"></a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

@@ -54,7 +54,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <input type="password" id="password" name="password" class="form-control"
                            placeholder="••••••••" required autocomplete="current-password">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block btn-lg">🔑 Prijavi se</button>
+                <button type="submit" class="btn btn-primary btn-block btn-lg"> Prijavi se</button>
             </form>
 
             <?php if (!empty(GOOGLE_CLIENT_ID)): ?>

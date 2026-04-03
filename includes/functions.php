@@ -176,10 +176,10 @@ function logAdminAction(int $adminId, string $action, string $targetType = '', i
 // ── Grade helper ──────────────────────────────────────────────────────────────
 function getGrade(int $pct): array {
     return match (true) {
-        $pct >= 95 => ['label' => 'Odličan',   'color' => '#16A34A', 'emoji' => '🏆'],
-        $pct >= 80 => ['label' => 'Vrlo dobar', 'color' => '#2563EB', 'emoji' => '⭐'],
-        $pct >= 65 => ['label' => 'Dobar',      'color' => '#CA8A04', 'emoji' => '👍'],
-        $pct >= 50 => ['label' => 'Dovoljan',   'color' => '#EA580C', 'emoji' => '📚'],
-        default    => ['label' => 'Nedovoljan', 'color' => '#DC2626', 'emoji' => '💪'],
+        $pct >= 95 => ['label' => 'Odličan',   'color' => '#16A34A', 'emoji' => ''],
+        $pct >= 80 => ['label' => 'Vrlo dobar', 'color' => '#2563EB', 'emoji' => ''],
+        $pct >= 65 => ['label' => 'Dobar',      'color' => '#CA8A04', 'emoji' => ''],
+        $pct >= 50 => ['label' => 'Dovoljan',   'color' => '#EA580C', 'emoji' => ''],
+        default    => ['label' => 'Nedovoljan', 'color' => '#DC2626', 'emoji' => ''],
     };
 }

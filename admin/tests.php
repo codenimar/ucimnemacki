@@ -80,13 +80,13 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="admin-layout">
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 class="admin-page-title">📝 Testovi</h1>
+        <h1 class="admin-page-title"> Testovi</h1>
         <?php if ($msg):   ?><div class="alert alert-success"><?= sanitize($msg) ?></div><?php endif; ?>
         <?php if ($error): ?><div class="alert alert-error"><?= sanitize($error) ?></div><?php endif; ?>
 
         <!-- Form -->
         <div class="card mb-4">
-            <div class="card-header"><?= $editTest ? 'Izmeni test' : '➕ Novi test' ?></div>
+            <div class="card-header"><?= $editTest ? 'Izmeni test' : ' Novi test' ?></div>
             <div class="card-body">
                 <form method="POST">
                     <input type="hidden" name="csrf_token" value="<?= generateToken() ?>">
@@ -149,9 +149,9 @@ require_once __DIR__ . '/../includes/header.php';
                         <td><?= formatTime((int)$t['time_limit']) ?></td>
                         <td><?= (int)$t['passing_score'] ?>%</td>
                         <td class="table-actions">
-                            <a href="?action=edit&id=<?= (int)$t['id'] ?>" class="btn btn-outline btn-sm">✏️</a>
-                            <a href="<?= SITE_URL ?>/admin/questions.php?test_id=<?= (int)$t['id'] ?>" class="btn btn-primary btn-sm">❓</a>
-                            <a href="?action=delete&id=<?= (int)$t['id'] ?>" class="btn btn-danger btn-sm" data-confirm="Obrisati test '<?= sanitize($t['title']) ?>'?">🗑️</a>
+                            <a href="?action=edit&id=<?= (int)$t['id'] ?>" class="btn btn-outline btn-sm"></a>
+                            <a href="<?= SITE_URL ?>/admin/questions.php?test_id=<?= (int)$t['id'] ?>" class="btn btn-primary btn-sm"></a>
+                            <a href="?action=delete&id=<?= (int)$t['id'] ?>" class="btn btn-danger btn-sm" data-confirm="Obrisati test '<?= sanitize($t['title']) ?>'?"></a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

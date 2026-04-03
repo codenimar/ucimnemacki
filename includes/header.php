@@ -56,7 +56,6 @@ $siteRoot = SITE_URL;
             <li><a href="<?= $siteRoot ?>/pages/grammar.php" class="nav-link <?= navActive('grammar.php') ?>">Gramatika</a></li>
             <li><a href="<?= $siteRoot ?>/pages/proficiency.php" class="nav-link <?= navActive('proficiency.php') ?>">Provera znanja</a></li>
             <li><a href="<?= $siteRoot ?>/pages/teachers.php" class="nav-link <?= navActive('teachers.php') ?>">Nastavnici</a></li>
-            <li><a href="<?= $siteRoot ?>/pages/leaderboard.php" class="nav-link <?= navActive('leaderboard.php') ?>">Ranglist</a></li>
         </ul>
 
         <!-- Auth area -->
@@ -74,20 +73,20 @@ $siteRoot = SITE_URL;
                     </button>
                     <div class="dropdown-menu" id="dropdownMenu" role="menu">
                         <a href="<?= $siteRoot ?>/pages/profile.php" class="dropdown-item" role="menuitem">
-                            <span>👤</span> Moj profil
+                            Moj profil
                         </a>
                         <a href="<?= $siteRoot ?>/pages/profile.php#progress" class="dropdown-item" role="menuitem">
-                            <span>📊</span> Napredak
+                            Napredak
                         </a>
                         <?php if ($isAdmin): ?>
                         <div class="dropdown-divider"></div>
                         <a href="<?= $siteRoot ?>/admin/index.php" class="dropdown-item dropdown-admin" role="menuitem">
-                            <span>⚙️</span> Admin panel
+                            Admin panel
                         </a>
                         <?php endif; ?>
                         <div class="dropdown-divider"></div>
                         <a href="<?= $siteRoot ?>/api/auth.php?action=logout" class="dropdown-item dropdown-logout" role="menuitem">
-                            <span>🚪</span> Odjavi se
+                            Odjavi se
                         </a>
                     </div>
                 </div>
@@ -108,22 +107,21 @@ $siteRoot = SITE_URL;
     <!-- Mobile menu -->
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
         <ul class="mobile-nav-links" role="list">
-            <li><a href="<?= $siteRoot ?>/index.php" class="mobile-nav-link">🏠 Početna</a></li>
-            <li><a href="<?= $siteRoot ?>/pages/tests.php" class="mobile-nav-link">📝 Testovi</a></li>
-            <li><a href="<?= $siteRoot ?>/pages/vocabulary.php" class="mobile-nav-link">📖 Vokabular</a></li>
-            <li><a href="<?= $siteRoot ?>/pages/grammar.php" class="mobile-nav-link">✏️ Gramatika</a></li>
-            <li><a href="<?= $siteRoot ?>/pages/proficiency.php" class="mobile-nav-link">🎓 Provera znanja</a></li>
-            <li><a href="<?= $siteRoot ?>/pages/teachers.php" class="mobile-nav-link">👨‍🏫 Nastavnici</a></li>
-            <li><a href="<?= $siteRoot ?>/pages/leaderboard.php" class="mobile-nav-link">🏆 Ranglist</a></li>
+            <li><a href="<?= $siteRoot ?>/index.php" class="mobile-nav-link">Početna</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/tests.php" class="mobile-nav-link">Testovi</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/vocabulary.php" class="mobile-nav-link">Vokabular</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/grammar.php" class="mobile-nav-link">Gramatika</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/proficiency.php" class="mobile-nav-link">Provera znanja</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/teachers.php" class="mobile-nav-link">Nastavnici</a></li>
             <?php if ($isLoggedIn): ?>
-            <li><a href="<?= $siteRoot ?>/pages/profile.php" class="mobile-nav-link">👤 Moj profil</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/profile.php" class="mobile-nav-link">Moj profil</a></li>
             <?php if ($isAdmin): ?>
-            <li><a href="<?= $siteRoot ?>/admin/index.php" class="mobile-nav-link">⚙️ Admin panel</a></li>
+            <li><a href="<?= $siteRoot ?>/admin/index.php" class="mobile-nav-link">Admin panel</a></li>
             <?php endif; ?>
-            <li><a href="<?= $siteRoot ?>/api/auth.php?action=logout" class="mobile-nav-link mobile-logout">🚪 Odjavi se</a></li>
+            <li><a href="<?= $siteRoot ?>/api/auth.php?action=logout" class="mobile-nav-link mobile-logout">Odjavi se</a></li>
             <?php else: ?>
-            <li><a href="<?= $siteRoot ?>/pages/login.php" class="mobile-nav-link">🔑 Prijavi se</a></li>
-            <li><a href="<?= $siteRoot ?>/pages/register.php" class="mobile-nav-link mobile-register">✨ Registruj se</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/login.php" class="mobile-nav-link">Prijavi se</a></li>
+            <li><a href="<?= $siteRoot ?>/pages/register.php" class="mobile-nav-link mobile-register">Registruj se</a></li>
             <?php endif; ?>
         </ul>
     </div>
@@ -138,7 +136,7 @@ $siteRoot = SITE_URL;
         <div class="parrot-mascot-small" aria-hidden="true">
             <img src="<?= $siteRoot ?>/assets/images/parrot.svg" alt="Papagaj maskota" width="48" height="48">
         </div>
-        <div class="parrot-message" id="parrotMessage">Zdravo! Učimo zajedno! 🎉</div>
+        <div class="parrot-message" id="parrotMessage">Zdravo! Učimo zajedno!</div>
         <button class="parrot-close" id="parrotClose" aria-label="Zatvori poruku papagaja">×</button>
     </div>
 </div>

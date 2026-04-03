@@ -41,14 +41,14 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="admin-layout">
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 class="admin-page-title">👥 Korisnici (<?= $total ?>)</h1>
+        <h1 class="admin-page-title"> Korisnici (<?= $total ?>)</h1>
 
         <form method="GET" class="d-flex gap-2 mb-4" style="align-items:center">
             <div class="input-group" style="max-width:360px">
                 <input type="text" name="q" value="<?= sanitize($search) ?>" class="form-control" placeholder="Pretraži korisnike...">
-                <button type="submit" class="btn btn-primary btn-sm">🔍</button>
+                <button type="submit" class="btn btn-primary btn-sm"></button>
             </div>
-            <?php if ($search): ?><a href="<?= SITE_URL ?>/admin/users.php" class="btn btn-ghost btn-sm">✕</a><?php endif; ?>
+            <?php if ($search): ?><a href="<?= SITE_URL ?>/admin/users.php" class="btn btn-ghost btn-sm"></a><?php endif; ?>
         </form>
 
         <div class="card">

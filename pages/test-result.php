@@ -49,9 +49,9 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php if ($timeout): ?>
                     <span class="badge badge-intermediate" style="font-size:1rem;padding:.5rem 1.5rem">⏰ Vreme je isteklo!</span>
                     <?php elseif ($passed): ?>
-                    <span class="badge badge-beginner" style="font-size:1rem;padding:.5rem 1.5rem">🎉 Test položen!</span>
+                    <span class="badge badge-beginner" style="font-size:1rem;padding:.5rem 1.5rem">Test položen!</span>
                     <?php else: ?>
-                    <span class="badge badge-advanced" style="font-size:1rem;padding:.5rem 1.5rem">📚 Test nije položen</span>
+                    <span class="badge badge-advanced" style="font-size:1rem;padding:.5rem 1.5rem">Test nije položen</span>
                     <?php endif; ?>
                 </div>
 
@@ -90,22 +90,22 @@ require_once __DIR__ . '/../includes/header.php';
                 <!-- Motivational message -->
                 <div class="alert <?= $passed ? 'alert-success' : 'alert-warning' ?>" style="text-align:left;margin-bottom:1.5rem">
                     <?php
-                    if ($pct >= 95) echo '🏆 Savršen rezultat! Fenomenalno! Pravi si majstor nemačkog!';
-                    elseif ($pct >= 80) echo '⭐ Odličan rezultat! Bravo, nastavi ovim tempom!';
-                    elseif ($pct >= 65) echo '👍 Dobar rezultat! Još malo vežbe i biće savršeno!';
-                    elseif ($pct >= 50) echo '📚 Prošao si! Ponovi gradivo i probaj ponovo za još bolji rezultat.';
-                    else echo '💪 Nisi prošao ovaj put, ali ne odustaj! Svaka greška je nova lekcija.';
+                    if ($pct >= 95) echo ' Savršen rezultat! Fenomenalno! Pravi si majstor nemačkog!';
+                    elseif ($pct >= 80) echo ' Odličan rezultat! Bravo, nastavi ovim tempom!';
+                    elseif ($pct >= 65) echo ' Dobar rezultat! Još malo vežbe i biće savršeno!';
+                    elseif ($pct >= 50) echo ' Prošao si! Ponovi gradivo i probaj ponovo za još bolji rezultat.';
+                    else echo ' Nisi prošao ovaj put, ali ne odustaj! Svaka greška je nova lekcija.';
                     ?>
                 </div>
 
                 <!-- Buttons -->
                 <div class="d-flex gap-2" style="justify-content:center;flex-wrap:wrap">
                     <?php if ($testId): ?>
-                    <a href="<?= SITE_URL ?>/pages/test-take.php?id=<?= $testId ?>" class="btn btn-primary">🔄 Ponovi test</a>
+                    <a href="<?= SITE_URL ?>/pages/test-take.php?id=<?= $testId ?>" class="btn btn-primary"> Ponovi test</a>
                     <?php endif; ?>
-                    <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-outline">📝 Svi testovi</a>
+                    <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-outline"> Svi testovi</a>
                     <?php if (isLoggedIn()): ?>
-                    <a href="<?= SITE_URL ?>/pages/profile.php" class="btn btn-ghost">👤 Moj profil</a>
+                    <a href="<?= SITE_URL ?>/pages/profile.php" class="btn btn-ghost"> Moj profil</a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -114,7 +114,7 @@ require_once __DIR__ . '/../includes/header.php';
         <!-- New achievements -->
         <?php if (!empty($newAchievements)): ?>
         <div class="card mt-4 animate-slide-up">
-            <div class="card-header">🏅 Nova dostignuća zarađena!</div>
+            <div class="card-header"> Nova dostignuća zarađena!</div>
             <div class="card-body">
                 <div class="grid grid-4" style="gap:1rem">
                     <?php foreach ($newAchievements as $ach): ?>

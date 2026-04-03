@@ -71,7 +71,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <input type="password" id="confirm" name="confirm" class="form-control"
                            placeholder="Ponovite lozinku" required autocomplete="new-password">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block btn-lg">✨ Registruj se</button>
+                <button type="submit" class="btn btn-primary btn-block btn-lg"> Registruj se</button>
             </form>
 
             <?php if (!empty(GOOGLE_CLIENT_ID)): ?>

@@ -24,19 +24,19 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="admin-layout">
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 class="admin-page-title">📊 Dashboard</h1>
+        <h1 class="admin-page-title">Dashboard</h1>
 
         <!-- Stats -->
         <div class="grid grid-4 mb-4">
             <?php
             $statItems = [
-                ['users',         '👤 Korisnici',    '/admin/users.php',      '#2563EB'],
-                ['tests',         '📝 Testovi',      '/admin/tests.php',      '#6B21A8'],
-                ['vocabulary',    '📖 Vokabular',    '#',                     '#16A34A'],
-                ['user_progress', '📊 Popunjenih',   '#',                     '#CA8A04'],
-                ['live_teachers', '👨‍🏫 Nastavnici','/admin/teachers.php',   '#EC4899'],
-                ['categories',    '📂 Kategorije',   '/admin/categories.php', '#DC2626'],
-                ['grammar_lessons','✏️ Lekcije',     '#',                     '#0891B2'],
+                ['users',         'Korisnici',    '/admin/users.php',      '#2563EB'],
+                ['tests',         'Testovi',      '/admin/tests.php',      '#6B21A8'],
+                ['vocabulary',    'Vokabular',    '#',                     '#16A34A'],
+                ['user_progress', 'Popunjenih',   '#',                     '#CA8A04'],
+                ['live_teachers', 'Nastavnici','/admin/teachers.php',   '#EC4899'],
+                ['categories',    'Kategorije',   '/admin/categories.php', '#DC2626'],
+                ['grammar_lessons','Lekcije',     '#',                     '#0891B2'],
             ];
             foreach ($statItems as [$key, $label, $link, $color]): ?>
             <a href="<?= SITE_URL . $link ?>" class="stat-card" style="text-decoration:none;display:block">
@@ -48,18 +48,18 @@ require_once __DIR__ . '/../includes/header.php';
 
         <!-- Quick actions -->
         <div class="card mb-4">
-            <div class="card-header">⚡ Brze radnje</div>
+            <div class="card-header">Brze radnje</div>
             <div class="card-body d-flex gap-2" style="flex-wrap:wrap">
-                <a href="<?= SITE_URL ?>/admin/tests.php?action=new"      class="btn btn-primary btn-sm">➕ Novi test</a>
-                <a href="<?= SITE_URL ?>/admin/categories.php?action=new" class="btn btn-outline btn-sm">➕ Nova kategorija</a>
-                <a href="<?= SITE_URL ?>/admin/teachers.php?action=new"   class="btn btn-outline btn-sm">➕ Novi nastavnik</a>
-                <a href="<?= SITE_URL ?>/admin/users.php"                 class="btn btn-ghost btn-sm">👥 Korisnici</a>
+                <a href="<?= SITE_URL ?>/admin/tests.php?action=new"      class="btn btn-primary btn-sm">Novi test</a>
+                <a href="<?= SITE_URL ?>/admin/categories.php?action=new" class="btn btn-outline btn-sm">Nova kategorija</a>
+                <a href="<?= SITE_URL ?>/admin/teachers.php?action=new"   class="btn btn-outline btn-sm">Novi nastavnik</a>
+                <a href="<?= SITE_URL ?>/admin/users.php"                 class="btn btn-ghost btn-sm">Korisnici</a>
             </div>
         </div>
 
         <!-- Recent logs -->
         <div class="card">
-            <div class="card-header">📋 Poslednje aktivnosti admina</div>
+            <div class="card-header">Poslednje aktivnosti admina</div>
             <?php if (empty($logs)): ?>
             <div class="card-body text-muted">Nema aktivnosti.</div>
             <?php else: ?>

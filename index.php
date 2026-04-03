@@ -25,15 +25,15 @@ require_once __DIR__ . '/includes/header.php';
         <div class="hero-parrot animate-float" aria-hidden="true">
             <img src="<?= SITE_URL ?>/assets/images/parrot.svg" alt="Učim Nemački papagaj maskota" width="160" height="160">
         </div>
-        <h1 class="animate-slide-up">Naučite Nemački<br>na zabavan način! 🇩🇪</h1>
+        <h1 class="animate-slide-up">Naučite Nemački<br>na zabavan način!</h1>
         <p class="hero-sub animate-slide-up delay-1">Interaktivni testovi, vokabular, gramatika i nastavnici – sve na jednom mestu za srpske govornike.</p>
         <div class="hero-cta animate-slide-up delay-2">
             <?php if (isLoggedIn()): ?>
-                <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-xl" style="background:#fff;color:#6B21A8;">📝 Počni sa testovima</a>
-                <a href="<?= SITE_URL ?>/pages/vocabulary.php" class="btn btn-xl btn-outline" style="border-color:#fff;color:#fff;">📖 Vokabular</a>
+                <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-xl" style="background:#fff;color:#6B21A8;">Počni sa testovima</a>
+                <a href="<?= SITE_URL ?>/pages/teachers.php" class="btn btn-xl btn-outline" style="border-color:#fff;color:#fff;">Nastavnici</a>
             <?php else: ?>
-                <a href="<?= SITE_URL ?>/pages/register.php" class="btn btn-xl" style="background:#fff;color:#6B21A8;">✨ Registruj se besplatno</a>
-                <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-xl btn-outline" style="border-color:rgba(255,255,255,.7);color:#fff;">👀 Pogledaj testove</a>
+                <a href="<?= SITE_URL ?>/pages/register.php" class="btn btn-xl" style="background:#fff;color:#6B21A8;">Registruj se besplatno</a>
+                <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-xl btn-outline" style="border-color:rgba(255,255,255,.7);color:#fff;">Pogledaj testove</a>
             <?php endif; ?>
         </div>
         <div class="hero-stats animate-fade-in delay-3">
@@ -66,7 +66,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="category-card-icon"><?= sanitize($cat['icon']) ?></div>
                 <div class="category-card-name"><?= sanitize($cat['name']) ?></div>
                 <div class="category-card-desc"><?= sanitize($cat['description']) ?></div>
-                <div class="category-card-count">📁 <?= (int)$cat['sub_cnt'] ?> potkategorija</div>
+                <div class="category-card-count"><?= (int)$cat['sub_cnt'] ?> potkategorija</div>
             </a>
             <?php endforeach; ?>
         </div>
@@ -81,18 +81,17 @@ require_once __DIR__ . '/includes/header.php';
         <div class="grid grid-4">
             <?php
             $features = [
-                ['🎯', 'Interaktivni testovi', 'Sedam vrsta pitanja uključujući slike, audio i povlačenje'],
-                ['🔊', 'Audio izgovor', 'Pravilni izgovor nemačkih reči uz audio snimke'],
-                ['🏆', 'Dostignuća', 'Zarađujte značke i poene dok napredujete'],
-                ['👨‍🏫', 'Nastavnici', 'Rezervišite čas sa iskusnim nastavnicima nemačkog'],
-                ['📊', 'Praćenje napretka', 'Pratite svoja postignuća i statistike učenja'],
-                ['🌍', 'Gramatika', 'Detaljni vodiči za nemačku gramatiku na srpskom'],
-                ['📱', 'Mobilni prikaz', 'Učite na telefonu, tabletu ili računaru'],
-                ['⚡', 'Brzo učenje', 'Efikasne metode za brže pamćenje vokabulara'],
+                [null, 'Interaktivni testovi', 'Sedam vrsta pitanja uključujući slike, audio i povlačenje'],
+                [null, 'Audio izgovor', 'Pravilni izgovor nemačkih reči uz audio snimke'],
+                [null, 'Dostignuća', 'Zarađujte značke i poene dok napredujete'],
+                [null, 'Nastavnici', 'Rezervišite čas sa iskusnim nastavnicima nemačkog'],
+                [null, 'Praćenje napretka', 'Pratite svoja postignuća i statistike učenja'],
+                [null, 'Gramatika', 'Detaljni vodiči za nemačku gramatiku na srpskom'],
+                [null, 'Mobilni prikaz', 'Učite na telefonu, tabletu ili računaru'],
+                [null, 'Brzo učenje', 'Efikasne metode za brže pamćenje vokabulara'],
             ];
             foreach ($features as $f): ?>
             <div class="card card-body text-center reveal">
-                <div style="font-size:2.5rem;margin-bottom:.75rem"><?= $f[0] ?></div>
                 <h4 style="margin-bottom:.4rem"><?= $f[1] ?></h4>
                 <p class="text-muted" style="font-size:.9rem;margin:0"><?= $f[2] ?></p>
             </div>
@@ -127,17 +126,17 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
                     <div class="test-card-title"><?= sanitize($test['title']) ?></div>
                     <div class="test-card-meta">
-                        <span>⏱️ <?= formatTime((int)$test['time_limit']) ?></span>
-                        <span>✅ Prolaz: <?= (int)$test['passing_score'] ?>%</span>
+                        <span><?= formatTime((int)$test['time_limit']) ?></span>
+                        <span>Prolaz: <?= (int)$test['passing_score'] ?>%</span>
                     </div>
                     <p class="text-muted" style="font-size:.88rem"><?= sanitize($test['description']) ?></p>
-                    <a href="<?= SITE_URL ?>/pages/test-take.php?id=<?= (int)$test['id'] ?>" class="btn btn-primary btn-sm btn-block mt-2">▶ Počni test</a>
+                    <a href="<?= SITE_URL ?>/pages/test-take.php?id=<?= (int)$test['id'] ?>" class="btn btn-primary btn-sm btn-block mt-2">Počni test</a>
                 </div>
             </div>
             <?php endforeach; ?>
         </div>
         <div class="text-center mt-4">
-            <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-primary btn-lg">Pogledaj sve testove →</a>
+            <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-primary btn-lg">Pogledaj sve testove</a>
         </div>
     </div>
 </section>
@@ -149,9 +148,9 @@ require_once __DIR__ . '/includes/header.php';
         <div class="grid grid-3">
             <?php
             $testimonials = [
-                ['Ana M.', 'Studenti', '⭐⭐⭐⭐⭐', 'Platforma mi je pomogla da položim B2 ispit! Testovi su zanimljivi i odlično pokrivaju gramatiku.'],
-                ['Petar K.', 'Roditelj', '⭐⭐⭐⭐⭐', 'Moje dete (9 godina) obožava učenje nemačkog kroz igru. Slike i zvukovi čine sve lakšim.'],
-                ['Jovana T.', 'Profesionalac', '⭐⭐⭐⭐⭐', 'Poslovni nemački mi je bio potreban – platforma ima odličan vokabular i konverzacijske testove.'],
+                ['Ana M.', 'Studenti', '', 'Platforma mi je pomogla da položim B2 ispit! Testovi su zanimljivi i odlično pokrivaju gramatiku.'],
+                ['Petar K.', 'Roditelj', '', 'Moje dete (9 godina) obožava učenje nemačkog kroz igru. Slike i zvukovi čine sve lakšim.'],
+                ['Jovana T.', 'Profesionalac', '', 'Poslovni nemački mi je bio potreban – platforma ima odličan vokabular i konverzacijske testove.'],
             ];
             foreach ($testimonials as $t): ?>
             <div class="card card-body reveal">
@@ -178,7 +177,7 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container">
         <h2 style="color:#fff;margin-bottom:1rem">Pridružite se hiljadama učenika!</h2>
         <p style="opacity:.9;font-size:1.1rem;margin-bottom:2rem">Registracija je besplatna. Počnite da učite nemački danas.</p>
-        <a href="<?= SITE_URL ?>/pages/register.php" class="btn btn-xl" style="background:#fff;color:#6B21A8">✨ Registruj se besplatno</a>
+        <a href="<?= SITE_URL ?>/pages/register.php" class="btn btn-xl" style="background:#fff;color:#6B21A8">Registruj se besplatno</a>
     </div>
 </section>
 <?php endif; ?>

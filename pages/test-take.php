@@ -54,11 +54,11 @@ require_once __DIR__ . '/../includes/header.php';
     <!-- Quiz header -->
     <div class="quiz-header">
         <div class="quiz-title">
-            <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-ghost btn-sm">← Nazad</a>
+            <a href="<?= SITE_URL ?>/pages/tests.php" class="btn btn-ghost btn-sm">Nazad</a>
             <strong style="margin-left:.5rem"><?= sanitize($test['title']) ?></strong>
         </div>
         <div class="quiz-timer" id="quizTimer">
-            ⏱️ <span id="timerDisplay">--:--</span>
+            <span id="timerDisplay">--:--</span>
         </div>
         <div style="font-size:.88rem;color:var(--text-muted)">
             Pitanje <span id="questionNum">1 / <?= count($questions) ?></span>
