@@ -90,11 +90,11 @@ require_once __DIR__ . '/../includes/header.php';
                 <!-- Motivational message -->
                 <div class="alert <?= $passed ? 'alert-success' : 'alert-warning' ?>" style="text-align:left;margin-bottom:1.5rem">
                     <?php
-                    if ($pct >= 95) echo ' Savršen rezultat! Fenomenalno! Pravi si majstor nemačkog!';
-                    elseif ($pct >= 80) echo ' Odličan rezultat! Bravo, nastavi ovim tempom!';
-                    elseif ($pct >= 65) echo ' Dobar rezultat! Još malo vežbe i biće savršeno!';
-                    elseif ($pct >= 50) echo ' Prošao si! Ponovi gradivo i probaj ponovo za još bolji rezultat.';
-                    else echo ' Nisi prošao ovaj put, ali ne odustaj! Svaka greška je nova lekcija.';
+                    if ($pct >= 95) echo 'Savršen rezultat! Fenomenalno! Pravi si majstor nemačkog!';
+                    elseif ($pct >= 80) echo 'Odličan rezultat! Bravo, nastavi ovim tempom!';
+                    elseif ($pct >= 65) echo 'Dobar rezultat! Još malo vežbe i biće savršeno!';
+                    elseif ($pct >= 50) echo 'Prošao si! Ponovi gradivo i probaj ponovo za još bolji rezultat.';
+                    else echo 'Nisi prošao ovaj put, ali ne odustaj! Svaka greška je nova lekcija.';
                     ?>
                 </div>
 

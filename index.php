@@ -81,19 +81,19 @@ require_once __DIR__ . '/includes/header.php';
         <div class="grid grid-4">
             <?php
             $features = [
-                [null, 'Interaktivni testovi', 'Sedam vrsta pitanja uključujući slike, audio i povlačenje'],
-                [null, 'Audio izgovor', 'Pravilni izgovor nemačkih reči uz audio snimke'],
-                [null, 'Dostignuća', 'Zarađujte značke i poene dok napredujete'],
-                [null, 'Nastavnici', 'Rezervišite čas sa iskusnim nastavnicima nemačkog'],
-                [null, 'Praćenje napretka', 'Pratite svoja postignuća i statistike učenja'],
-                [null, 'Gramatika', 'Detaljni vodiči za nemačku gramatiku na srpskom'],
-                [null, 'Mobilni prikaz', 'Učite na telefonu, tabletu ili računaru'],
-                [null, 'Brzo učenje', 'Efikasne metode za brže pamćenje vokabulara'],
+                ['Interaktivni testovi', 'Sedam vrsta pitanja uključujući slike, audio i povlačenje'],
+                ['Audio izgovor', 'Pravilni izgovor nemačkih reči uz audio snimke'],
+                ['Dostignuća', 'Zarađujte značke i poene dok napredujete'],
+                ['Nastavnici', 'Rezervišite čas sa iskusnim nastavnicima nemačkog'],
+                ['Praćenje napretka', 'Pratite svoja postignuća i statistike učenja'],
+                ['Gramatika', 'Detaljni vodiči za nemačku gramatiku na srpskom'],
+                ['Mobilni prikaz', 'Učite na telefonu, tabletu ili računaru'],
+                ['Brzo učenje', 'Efikasne metode za brže pamćenje vokabulara'],
             ];
             foreach ($features as $f): ?>
             <div class="card card-body text-center reveal">
-                <h4 style="margin-bottom:.4rem"><?= $f[1] ?></h4>
-                <p class="text-muted" style="font-size:.9rem;margin:0"><?= $f[2] ?></p>
+                <h4 style="margin-bottom:.4rem"><?= $f[0] ?></h4>
+                <p class="text-muted" style="font-size:.9rem;margin:0"><?= $f[1] ?></p>
             </div>
             <?php endforeach; ?>
         </div>

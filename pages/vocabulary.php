@@ -159,7 +159,6 @@ require_once __DIR__ . '/../includes/header.php';
 
         <?php if (empty($words)): ?>
         <div class="card card-body text-center" style="padding:3rem">
-            <div style="font-size:3rem;margin-bottom:1rem"></div>
             <h3>Vaš vokabular je prazan</h3>
             <p class="text-muted">Dodajte prvu reč koristeći formu iznad.</p>
         </div>

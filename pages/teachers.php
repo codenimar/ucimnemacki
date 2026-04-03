@@ -104,7 +104,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php endif; ?>
                     <?php if ($t['bio']): ?>
                     <p class="text-muted" style="font-size:.88rem;text-align:center;margin:.75rem 0">
-                        <?= sanitize(mb_substr($t['bio'], 0, 140)) ?>...
+                        <?= sanitize(mb_substr($t['bio'], 0, 140)) . (mb_strlen($t['bio']) > 140 ? '...' : '') ?>
                     </p>
                     <?php endif; ?>
                     <?php if (!empty($methods)): ?>

@@ -322,11 +322,11 @@ require_once __DIR__ . '/../includes/header.php';
                         </div>
                         <?php endif; ?>
                         <?php foreach ($q['media'] as $m): ?>
-                        <div style="font-size:.8rem;color:var(--blue)"> <?= $m['media_type'] === 'image' ? '' : '' ?> <?= sanitize($m['file_path']) ?></div>
+                        <div style="font-size:.8rem;color:var(--blue)"> <?= sanitize($m['file_path']) ?></div>
                         <?php endforeach; ?>
                     </div>
                     <div class="table-actions">
-                        <a href="?test_id=<?= $testId ?>&action=delete&id=<?= (int)$q['id'] ?>" class="btn btn-danger btn-sm" data-confirm="Obrisati ovo pitanje?"></a>
+                        <a href="?test_id=<?= $testId ?>&action=delete&id=<?= (int)$q['id'] ?>" class="btn btn-danger btn-sm" data-confirm="Obrisati ovo pitanje?">Obriši</a>
                     </div>
                 </div>
                 <?php endforeach; ?>

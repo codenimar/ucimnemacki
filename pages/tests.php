@@ -74,9 +74,6 @@ require_once __DIR__ . '/../includes/header.php';
         <?php else: foreach ($grouped as $catId => $catData): ?>
         <div class="mb-5">
             <div class="d-flex align-center gap-2 mb-3">
-                <div style="width:40px;height:40px;border-radius:12px;background:<?= sanitize($catData['info']['color']) ?>;display:flex;align-items:center;justify-content:center;font-size:1.3rem">
-                    
-                </div>
                 <h2 style="margin:0;font-size:1.5rem"><?= sanitize($catData['info']['name']) ?></h2>
             </div>
 
