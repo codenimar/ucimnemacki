@@ -96,10 +96,10 @@ require_once __DIR__ . '/../includes/header.php';
 <section class="section">
     <div class="container">
         <div class="d-flex align-center gap-2 mb-4" style="flex-wrap:wrap">
-            <h1 style="margin:0;flex:1">📖 Moj Vokabular</h1>
+            <h1 style="margin:0;flex:1">Moj Vokabular</h1>
             <?php if (!empty($words)): ?>
             <a href="?mode=<?= $mode === 'list' ? 'flashcard' : 'list' ?>" class="btn btn-outline btn-sm">
-                <?= $mode === 'list' ? '🃏 Kartica mod' : '📋 Lista mod' ?>
+                <?= $mode === 'list' ? 'Kartica mod' : 'Lista mod' ?>
             </a>
             <?php endif; ?>
         </div>
@@ -109,7 +109,7 @@ require_once __DIR__ . '/../includes/header.php';
 
         <!-- Add / Edit Form -->
         <div class="card mb-5">
-            <div class="card-header"><?= $editWord ? '✏️ Izmeni reč' : '➕ Dodaj novu reč' ?></div>
+            <div class="card-header"><?= $editWord ? 'Izmeni reč' : 'Dodaj novu reč' ?></div>
             <div class="card-body">
                 <form method="POST">
                     <input type="hidden" name="csrf_token" value="<?= generateToken() ?>">
@@ -159,7 +159,6 @@ require_once __DIR__ . '/../includes/header.php';
 
         <?php if (empty($words)): ?>
         <div class="card card-body text-center" style="padding:3rem">
-            <div style="font-size:3rem;margin-bottom:1rem">📭</div>
             <h3>Vaš vokabular je prazan</h3>
             <p class="text-muted">Dodajte prvu reč koristeći formu iznad.</p>
         </div>
@@ -186,9 +185,12 @@ require_once __DIR__ . '/../includes/header.php';
             </div>
         </div>
         <div class="d-flex gap-2 mt-4" style="justify-content:center;align-items:center">
-            <button id="fcPrev" class="btn btn-outline btn-sm">← Prethodna</button>
+            <button id="fcPrev" class="btn btn-outline btn-sm">&#8592; Prethodna</button>
             <span id="fcNum" style="font-weight:700;color:var(--text-muted)">1 / <?= count($words) ?></span>
-            <button id="fcNext" class="btn btn-primary btn-sm">Sledeća →</button>
+            <button id="fcNext" class="btn btn-primary btn-sm">Sledeća &#8594;</button>
+        </div>
+        <div class="d-flex gap-2 mt-2" style="justify-content:center">
+            <button id="fcAudioBtn" class="btn btn-outline btn-sm" title="Reprodukuj audio">&#9654; Audio</button>
         </div>
         <script>
         const fcWords = <?= json_encode($words, JSON_UNESCAPED_UNICODE) ?>;
@@ -201,6 +203,8 @@ require_once __DIR__ . '/../includes/header.php';
             document.getElementById('fcExample').textContent  = w.example_sentence || '';
             document.getElementById('fcNum').textContent      = (fcIdx + 1) + ' / ' + fcWords.length;
             document.getElementById('mainFlashcard').classList.remove('flipped');
+            const btn = document.getElementById('fcAudioBtn');
+            if (btn) btn.style.display = w.audio_path ? '' : 'none';
         }
         document.getElementById('fcNext').addEventListener('click', () => {
             fcIdx = (fcIdx + 1) % fcWords.length; renderFC();
@@ -209,6 +213,17 @@ require_once __DIR__ . '/../includes/header.php';
             fcIdx = (fcIdx - 1 + fcWords.length) % fcWords.length; renderFC();
         });
         renderFC();
+
+        const fcAudioBtn = document.getElementById('fcAudioBtn');
+        if (fcAudioBtn) {
+            fcAudioBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const w = fcWords[fcIdx];
+                if (w.audio_path) {
+                    new Audio('<?= UPLOAD_URL ?>' + w.audio_path).play();
+                }
+            });
+        }
         </script>
 
         <?php else: ?>
@@ -219,25 +234,32 @@ require_once __DIR__ . '/../includes/header.php';
         <?php foreach ($byCategory as $cat => $wList): ?>
         <div class="mb-5">
             <h3 style="margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid var(--border)">
-                📂 <?= sanitize($cat) ?>
+                <?= sanitize($cat) ?>
                 <span class="badge badge-purple" style="font-size:.8rem;vertical-align:middle"><?= count($wList) ?></span>
             </h3>
             <div class="table-wrapper">
                 <table class="table">
-                    <thead><tr><th>Nemački</th><th>Srpski</th><th>Primer</th><th>Akcije</th></tr></thead>
+                    <thead><tr><th>Nemački</th><th>Srpski</th><th>Primer</th><th>Audio</th><th>Akcije</th></tr></thead>
                     <tbody>
                     <?php foreach ($wList as $w): ?>
                     <tr>
                         <td><strong><?= sanitize($w['german_word']) ?></strong></td>
                         <td><?= sanitize($w['serbian_translation']) ?></td>
                         <td style="font-size:.85rem;color:var(--text-muted)"><?= sanitize($w['example_sentence'] ?? '') ?></td>
+                        <td>
+                            <?php if (!empty($w['audio_path'])): ?>
+                            <button type="button" class="btn btn-outline btn-sm"
+                                    onclick="(new Audio('<?= UPLOAD_URL . sanitize($w['audio_path']) ?>')).play()"
+                                    title="Reprodukuj audio">&#9654;</button>
+                            <?php endif; ?>
+                        </td>
                         <td class="table-actions">
-                            <a href="?action=edit&id=<?= (int)$w['id'] ?>" class="btn btn-outline btn-sm">✏️</a>
+                            <a href="?action=edit&id=<?= (int)$w['id'] ?>" class="btn btn-outline btn-sm">Izmeni</a>
                             <form method="POST" style="display:inline"
                                   onsubmit="return confirm('Obrisati reč \'<?= sanitize($w['german_word']) ?>\'?')">
                                 <input type="hidden" name="csrf_token" value="<?= generateToken() ?>">
                                 <input type="hidden" name="delete_id"  value="<?= (int)$w['id'] ?>">
-                                <button type="submit" class="btn btn-danger btn-sm">🗑️</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Obriši</button>
                             </form>
                         </td>
                     </tr>

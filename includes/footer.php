@@ -31,7 +31,6 @@
                     <li><a href="<?= SITE_URL ?>/pages/vocabulary.php">Vokabular</a></li>
                     <li><a href="<?= SITE_URL ?>/pages/grammar.php">Gramatika</a></li>
                     <li><a href="<?= SITE_URL ?>/pages/teachers.php">Nastavnici</a></li>
-                    <li><a href="<?= SITE_URL ?>/pages/leaderboard.php">Ranglist</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -55,7 +54,7 @@
 
         <div class="footer-bottom">
             <p>&copy; <?= date('Y') ?> Učim Nemački. Sva prava zadržana.</p>
-            <p class="footer-made">Napravljeno sa ❤️ za ljubitelje nemačkog jezika</p>
+            <p class="footer-made">Napravljeno za ljubitelje nemačkog jezika</p>
         </div>
     </div>
 </footer>

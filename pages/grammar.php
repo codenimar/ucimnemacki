@@ -36,11 +36,11 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <section class="section">
     <div class="container">
-        <h1 style="margin-bottom:2rem">✏️ Gramatika</h1>
+        <h1 style="margin-bottom:2rem">Gramatika</h1>
         <div style="display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap">
             <!-- Sidebar -->
             <div style="width:260px;flex-shrink:0;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;position:sticky;top:calc(var(--nav-h) + 1rem)">
-                <h4 style="margin-bottom:1rem;font-size:1rem">📚 Lekcije</h4>
+                <h4 style="margin-bottom:1rem;font-size:1rem">Lekcije</h4>
                 <?php foreach ($allLessons as $lesson): ?>
                 <a href="?lesson=<?= (int)$lesson['id'] ?>"
                    class="d-flex align-center gap-2"
@@ -85,7 +85,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </div>
                 <?php else: ?>
                 <div class="card card-body text-center" style="padding:3rem">
-                    <div style="font-size:3rem;margin-bottom:1rem">📖</div>
+                    
                     <h3>Odaberite lekciju</h3>
                     <p class="text-muted">Kliknite na neku lekciju sa liste sa leve strane.</p>
                 </div>

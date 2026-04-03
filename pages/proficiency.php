@@ -176,7 +176,7 @@ require_once __DIR__ . '/../includes/header.php';
 <?php if (!isset($_SESSION['prof_test'])): ?>
     <!-- ── Intro ─────────────────────────────────────────────────── -->
     <div class="card card-body text-center" style="padding:3rem">
-        <div style="font-size:3.5rem;margin-bottom:1rem">🎓</div>
+        <div style="font-size:3.5rem;margin-bottom:1rem"></div>
         <h1 style="margin-bottom:.5rem">Provera znanja nemačkog</h1>
         <p class="text-muted" style="margin-bottom:2rem;font-size:1.05rem">
             Saznajte vaš nivo nemačkog prema CEFR skali (A1–C2).<br>
@@ -192,7 +192,7 @@ require_once __DIR__ . '/../includes/header.php';
         </div>
         <form method="POST">
             <input type="hidden" name="action" value="start">
-            <button type="submit" class="btn btn-primary">🚀 Počni test</button>
+            <button type="submit" class="btn btn-primary">Počni test</button>
         </form>
     </div>
 
@@ -203,7 +203,7 @@ require_once __DIR__ . '/../includes/header.php';
     $roundData = $_SESSION['prof_test']['results'];
     ?>
     <div class="card card-body text-center" style="padding:3rem">
-        <div style="font-size:3.5rem;margin-bottom:1rem">🏆</div>
+        <div style="font-size:3.5rem;margin-bottom:1rem"></div>
         <h1 style="margin-bottom:.5rem">Vaš nivo nemačkog je:</h1>
         <div style="font-size:3rem;font-weight:800;color:var(--purple);margin:1rem 0"><?= sanitize($result) ?></div>
         <h2 style="margin-bottom:.5rem"><?= sanitize($levelNames[$result] ?? $result) ?></h2>
@@ -221,7 +221,7 @@ require_once __DIR__ . '/../includes/header.php';
                         <td><?= $i + 1 ?></td>
                         <td><strong><?= sanitize($r['level']) ?></strong></td>
                         <td><?= (int)$r['score'] ?>/10</td>
-                        <td><?= $r['passed'] ? '✅ Položeno' : '❌ Nije položeno' ?></td>
+                        <td><?= $r['passed'] ? ' Položeno' : ' Nije položeno' ?></td>
                     </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -232,7 +232,7 @@ require_once __DIR__ . '/../includes/header.php';
 
         <form method="POST">
             <input type="hidden" name="action" value="reset">
-            <button type="submit" class="btn btn-outline btn-sm">🔄 Ponovi test</button>
+            <button type="submit" class="btn btn-outline btn-sm">Ponovi test</button>
         </form>
     </div>
 
@@ -245,7 +245,7 @@ require_once __DIR__ . '/../includes/header.php';
     ?>
     <div class="card mb-3">
         <div class="card-header" style="display:flex;justify-content:space-between;align-items:center">
-            <span>🎓 Provera znanja – Runda <?= (int)$round ?>/3</span>
+            <span> Provera znanja – Runda <?= (int)$round ?>/3</span>
             <span class="badge badge-purple"><?= sanitize($level) ?> – <?= sanitize($levelNames[$level] ?? $level) ?></span>
         </div>
     </div>

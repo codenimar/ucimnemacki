@@ -94,13 +94,13 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="admin-layout">
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 class="admin-page-title">🎓 Provera znanja – Pitanja</h1>
+        <h1 class="admin-page-title">Provera znanja – Pitanja</h1>
         <?php if ($msg):   ?><div class="alert alert-success"><?= sanitize($msg) ?></div><?php endif; ?>
         <?php if ($error): ?><div class="alert alert-error"><?= sanitize($error) ?></div><?php endif; ?>
 
         <!-- Form -->
         <div class="card mb-4">
-            <div class="card-header"><?= $editQuestion ? '✏️ Izmeni pitanje' : '➕ Novo pitanje' ?></div>
+            <div class="card-header"><?= $editQuestion ? ' Izmeni pitanje' : ' Novo pitanje' ?></div>
             <div class="card-body">
                 <form method="POST">
                     <input type="hidden" name="csrf_token" value="<?= generateToken() ?>">
@@ -191,9 +191,9 @@ require_once __DIR__ . '/../includes/header.php';
                         <td><strong><?= strtoupper(sanitize($q['correct_answer'])) ?></strong>
                             – <?= sanitize($q['option_' . $q['correct_answer']]) ?></td>
                         <td class="table-actions">
-                            <a href="?action=edit&id=<?= (int)$q['id'] ?>" class="btn btn-outline btn-sm">✏️</a>
+                            <a href="?action=edit&id=<?= (int)$q['id'] ?>" class="btn btn-outline btn-sm">Izmeni</a>
                             <a href="?action=delete&id=<?= (int)$q['id'] ?>" class="btn btn-danger btn-sm"
-                               onclick="return confirm('Obrisati ovo pitanje?')">🗑️</a>
+                               onclick="return confirm('Obrisati ovo pitanje?')">Obriši</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

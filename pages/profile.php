@@ -56,10 +56,10 @@ require_once __DIR__ . '/../includes/header.php';
                     <h2 style="margin-bottom:.25rem"><?= sanitize($user['username']) ?></h2>
                     <p class="text-muted" style="margin:0"><?= sanitize($user['email']) ?></p>
                     <div class="d-flex gap-2 mt-2" style="flex-wrap:wrap">
-                        <span class="badge badge-purple">⭐ <?= (int)$user['total_points'] ?> poena</span>
-                        <span class="badge" style="background:var(--yellow-light);color:#92400E">🔥 <?= (int)$user['streak'] ?> dana streak</span>
+                        <span class="badge badge-purple"><?= (int)$user['total_points'] ?> poena</span>
+                        <span class="badge" style="background:var(--yellow-light);color:#92400E"><?= (int)$user['streak'] ?> dana streak</span>
                         <?php if ($user['role'] === 'admin'): ?>
-                        <span class="badge badge-blue">⚙️ Administrator</span>
+                        <span class="badge badge-blue">Administrator</span>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -89,7 +89,7 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="grid grid-2" style="gap:1.5rem;align-items:start">
             <!-- Recent activity -->
             <div class="card">
-                <div class="card-header">📊 Nedavna aktivnost</div>
+                <div class="card-header"> Nedavna aktivnost</div>
                 <div class="card-body" style="padding:.5rem 0">
                     <?php if (empty($recentActivity)): ?>
                     <div class="text-center" style="padding:2rem;color:var(--text-muted)">
@@ -119,7 +119,7 @@ require_once __DIR__ . '/../includes/header.php';
 
             <!-- Achievements -->
             <div class="card">
-                <div class="card-header">🏅 Dostignuća</div>
+                <div class="card-header">Dostignuća</div>
                 <div class="card-body">
                     <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.75rem">
                         <?php foreach ($allAch as $ach):
@@ -129,7 +129,7 @@ require_once __DIR__ . '/../includes/header.php';
                             <div class="achievement-icon"><?= sanitize($ach['icon']) ?></div>
                             <div class="achievement-name"><?= sanitize($ach['name']) ?></div>
                             <?php if ($earned): ?>
-                            <div style="font-size:.7rem;color:var(--green);font-weight:700">✓ Zarađeno</div>
+                            <div style="font-size:.7rem;color:var(--green);font-weight:700">Zarađeno</div>
                             <?php else: ?>
                             <div class="achievement-desc"><?= sanitize($ach['description']) ?></div>
                             <?php endif; ?>

@@ -164,7 +164,7 @@ require_once __DIR__ . '/../includes/header.php';
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
     <div class="admin-content">
         <h1 class="admin-page-title">
-            ❓ Pitanja
+             Pitanja
             <?php if ($test): ?>– <span style="color:var(--purple-800)"><?= sanitize($test['title']) ?></span><?php endif; ?>
         </h1>
 
@@ -185,7 +185,7 @@ require_once __DIR__ . '/../includes/header.php';
         <!-- Add question form -->
         <?php if ($testId): ?>
         <div class="card mb-4">
-            <div class="card-header">➕ Novo pitanje</div>
+            <div class="card-header"> Novo pitanje</div>
             <div class="card-body">
                 <form method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token" value="<?= generateToken() ?>">
@@ -322,11 +322,11 @@ require_once __DIR__ . '/../includes/header.php';
                         </div>
                         <?php endif; ?>
                         <?php foreach ($q['media'] as $m): ?>
-                        <div style="font-size:.8rem;color:var(--blue)">📎 <?= $m['media_type'] === 'image' ? '🖼️' : '🔊' ?> <?= sanitize($m['file_path']) ?></div>
+                        <div style="font-size:.8rem;color:var(--blue)"> <?= sanitize($m['file_path']) ?></div>
                         <?php endforeach; ?>
                     </div>
                     <div class="table-actions">
-                        <a href="?test_id=<?= $testId ?>&action=delete&id=<?= (int)$q['id'] ?>" class="btn btn-danger btn-sm" data-confirm="Obrisati ovo pitanje?">🗑️</a>
+                        <a href="?test_id=<?= $testId ?>&action=delete&id=<?= (int)$q['id'] ?>" class="btn btn-danger btn-sm" data-confirm="Obrisati ovo pitanje?">Obriši</a>
                     </div>
                 </div>
                 <?php endforeach; ?>

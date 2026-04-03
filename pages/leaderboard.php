@@ -42,7 +42,7 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <section class="section">
     <div class="container-sm">
-        <h1 style="text-align:center;margin-bottom:.5rem">🏆 Ranglist</h1>
+        <h1 style="text-align:center;margin-bottom:.5rem">Ranglist</h1>
         <p class="text-muted" style="text-align:center;margin-bottom:2rem">Takmičite se sa ostalim učenicima nemačkog</p>
 
         <?php if ($userRank && $currentUserId): ?>
@@ -59,7 +59,7 @@ require_once __DIR__ . '/../includes/header.php';
         <div style="display:flex;flex-direction:column;gap:.6rem">
             <?php foreach ($leaders as $i => $leader):
                 $rank      = $offset + $i + 1;
-                $rankEmoji = match($rank) { 1 => '🥇', 2 => '🥈', 3 => '🥉', default => '' };
+                $rankEmoji = match($rank) { 1 => '1.', 2 => '2.', 3 => '3.', default => '' };
                 $isMe      = $leader['id'] == $currentUserId;
             ?>
             <div class="leaderboard-item <?= $isMe ? 'hover-glow' : '' ?>" style="<?= $isMe ? 'border-color:var(--purple-400);background:var(--purple-50);' : '' ?>">
@@ -77,7 +77,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <?= sanitize($leader['username']) ?>
                     <?php if ($isMe): ?> <span class="badge badge-purple" style="font-size:.7rem">Vi</span><?php endif; ?>
                     <div style="font-size:.8rem;color:var(--text-muted);font-weight:400">
-                        <?= (int)$leader['tests_done'] ?> testova · 🔥 <?= (int)$leader['streak'] ?> dana
+                        <?= (int)$leader['tests_done'] ?> testova · <?= (int)$leader['streak'] ?> dana
                     </div>
                 </div>
                 <div class="leaderboard-points"><?= number_format((int)$leader['total_points']) ?> <span style="font-size:.8rem;font-weight:400;color:var(--text-muted)">poena</span></div>

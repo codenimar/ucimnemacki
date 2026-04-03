@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($type === 'category') {
             $name  = trim($_POST['name'] ?? '');
             $desc  = trim($_POST['description'] ?? '');
-            $icon  = trim($_POST['icon']  ?? '📚');
+            $icon  = trim($_POST['icon']  ?? '');
             $color = trim($_POST['color'] ?? '#6B21A8');
             $order = (int)($_POST['sort_order'] ?? 0);
             $id    = (int)($_POST['id'] ?? 0);
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $catId = (int)($_POST['category_id'] ?? 0);
             $name  = trim($_POST['name'] ?? '');
             $desc  = trim($_POST['description'] ?? '');
-            $icon  = trim($_POST['icon']  ?? '📝');
+            $icon  = trim($_POST['icon']  ?? '');
             $order = (int)($_POST['sort_order'] ?? 0);
             $id    = (int)($_POST['id'] ?? 0);
             if ($id) {
@@ -85,14 +85,14 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="admin-layout">
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
     <div class="admin-content">
-        <h1 class="admin-page-title">📂 Kategorije & Potkategorije</h1>
+        <h1 class="admin-page-title">Kategorije & Potkategorije</h1>
         <?php if ($msg):   ?><div class="alert alert-success"><?= sanitize($msg) ?></div><?php endif; ?>
         <?php if ($error): ?><div class="alert alert-error"><?= sanitize($error) ?></div><?php endif; ?>
 
         <div class="grid grid-2 mb-4" style="align-items:start;gap:1.5rem">
             <!-- Create category form -->
             <div class="card">
-                <div class="card-header">➕ Nova kategorija</div>
+                <div class="card-header"> Nova kategorija</div>
                 <div class="card-body">
                     <form method="POST">
                         <input type="hidden" name="csrf_token" value="<?= generateToken() ?>">
@@ -100,7 +100,7 @@ require_once __DIR__ . '/../includes/header.php';
                         <div class="form-group"><label class="form-label">Naziv</label><input type="text" name="name" class="form-control" required></div>
                         <div class="form-group"><label class="form-label">Opis</label><textarea name="description" class="form-control" rows="2"></textarea></div>
                         <div class="grid grid-2" style="gap:.75rem">
-                            <div class="form-group"><label class="form-label">Ikona (emoji)</label><input type="text" name="icon" class="form-control" value="📚" maxlength="5"></div>
+                            <div class="form-group"><label class="form-label">Ikona</label><input type="text" name="icon" class="form-control" value="" maxlength="5"></div>
                             <div class="form-group"><label class="form-label">Boja</label><input type="color" name="color" class="form-control" value="#6B21A8" style="height:46px"></div>
                         </div>
                         <div class="form-group"><label class="form-label">Redosled</label><input type="number" name="sort_order" class="form-control" value="0"></div>
@@ -110,7 +110,7 @@ require_once __DIR__ . '/../includes/header.php';
             </div>
             <!-- Create subcategory form -->
             <div class="card">
-                <div class="card-header">➕ Nova potkategorija</div>
+                <div class="card-header"> Nova potkategorija</div>
                 <div class="card-body">
                     <form method="POST">
                         <input type="hidden" name="csrf_token" value="<?= generateToken() ?>">
@@ -126,7 +126,7 @@ require_once __DIR__ . '/../includes/header.php';
                         <div class="form-group"><label class="form-label">Naziv</label><input type="text" name="name" class="form-control" required></div>
                         <div class="form-group"><label class="form-label">Opis</label><textarea name="description" class="form-control" rows="2"></textarea></div>
                         <div class="grid grid-2" style="gap:.75rem">
-                            <div class="form-group"><label class="form-label">Ikona</label><input type="text" name="icon" class="form-control" value="📝" maxlength="5"></div>
+                            <div class="form-group"><label class="form-label">Ikona</label><input type="text" name="icon" class="form-control" value="" maxlength="5"></div>
                             <div class="form-group"><label class="form-label">Redosled</label><input type="number" name="sort_order" class="form-control" value="0"></div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm">Sačuvaj potkategoriju</button>
