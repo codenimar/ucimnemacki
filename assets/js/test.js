@@ -129,9 +129,8 @@ class QuizEngine {
     _buildChoices(q) {
         let html = '<div class="options-grid">';
         q.options?.forEach((opt, i) => {
-            const optionAudio = q.media ? q.media.find(m => m.display_context === 'option_audio_' + i && m.media_type === 'audio') : null;
             html += `<button class="option-btn" data-index="${i}" data-correct="${opt.is_correct}"
-                data-audio="${optionAudio ? '/uploads/' + this._esc(optionAudio.file_path) : ''}"
+                data-audio="${this._findOptionAudioPath(q, i)}"
                 onclick="quiz._selectChoice(this, ${q.id})">${this._esc(opt.option_text)}</button>`;
         });
         html += '</div>';
@@ -185,12 +184,11 @@ class QuizEngine {
         let html = '<div class="options-grid">';
         q.options?.forEach((opt, i) => {
             const media = q.media ? q.media.find(m => m.display_context === 'option_' + i) : null;
-            const optionAudio = q.media ? q.media.find(m => m.display_context === 'option_audio_' + i && m.media_type === 'audio') : null;
             const imgHtml = media
                 ? `<img src="/uploads/${this._esc(media.file_path)}" alt="Opcija ${i + 1}" class="option-img">`
                 : `<span class="text-muted">Opcija ${i + 1}</span>`;
             html += `<button class="option-btn option-btn--image" data-index="${i}" data-correct="${opt.is_correct}"
-                data-audio="${optionAudio ? '/uploads/' + this._esc(optionAudio.file_path) : ''}"
+                data-audio="${this._findOptionAudioPath(q, i)}"
                 onclick="quiz._selectChoice(this, ${q.id})">${imgHtml}</button>`;
         });
         html += '</div>';
@@ -351,7 +349,14 @@ class QuizEngine {
             this.answerAudio.src = path;
             this.answerAudio.currentTime = 0;
             this.answerAudio.play().catch(() => {});
-        } catch (e) {}
+        } catch (e) {
+            console.debug('Answer audio playback failed', e);
+        }
+    }
+
+    _findOptionAudioPath(q, index) {
+        const optionAudio = q.media ? q.media.find(m => m.display_context === 'option_audio_' + index && m.media_type === 'audio') : null;
+        return optionAudio ? '/uploads/' + this._esc(optionAudio.file_path) : '';
     }
 
     // ── Next question ──────────────────────────────

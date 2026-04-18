@@ -134,7 +134,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             if (!empty($_FILES['option_images']['name'])) {
                 foreach ($_FILES['option_images']['name'] as $idx => $name) {
-                    if (!is_int($idx) || $idx < 0 || $idx > 3) continue;
+                    if (!is_numeric($idx)) continue;
+                    $idx = (int)$idx;
+                    if ($idx < 0 || $idx > 3) continue;
                     if (empty($name)) continue;
                     $file = [
                         'name'     => $_FILES['option_images']['name'][$idx],
@@ -153,7 +155,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             if (!empty($_FILES['option_audio_images']['name'])) {
                 foreach ($_FILES['option_audio_images']['name'] as $idx => $name) {
-                    if (!is_int($idx) || $idx < 0 || $idx > 3) continue;
+                    if (!is_numeric($idx)) continue;
+                    $idx = (int)$idx;
+                    if ($idx < 0 || $idx > 3) continue;
                     if (empty($name)) continue;
                     $file = [
                         'name'     => $_FILES['option_audio_images']['name'][$idx],
