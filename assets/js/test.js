@@ -18,6 +18,7 @@ class QuizEngine {
         this.timer     = null;
         this.timeLeft  = this.test.time_limit;
         this.finished  = false;
+        this.pendingSelection = null;
 
         this.wrap        = document.getElementById('quizWrap');
         this.progressBar = document.getElementById('quizProgress');
@@ -67,6 +68,7 @@ class QuizEngine {
     _showQuestion() {
         if (this.current >= this.total) { this._finish(); return; }
         const q = this.questions[this.current];
+        this.pendingSelection = null;
         this._updateProgress();
         const html = this._buildQuestion(q);
         if (this.questionEl) {
@@ -133,7 +135,8 @@ class QuizEngine {
                 data-audio="${this._findOptionAudioPath(q, i)}"
                 onclick="quiz._selectChoice(this, ${q.id})">${this._esc(opt.option_text)}</button>`;
         });
-        html += '</div>';
+        html += `</div>
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -141,9 +144,10 @@ class QuizEngine {
         const trueAudio  = q.media ? q.media.find(m => m.display_context === 'tf_true' && m.media_type === 'audio') : null;
         const falseAudio = q.media ? q.media.find(m => m.display_context === 'tf_false' && m.media_type === 'audio') : null;
         return `<div class="options-grid">
-            <button class="option-btn" data-value="Tačno" data-audio="${trueAudio ? '/uploads/' + this._esc(trueAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Tačno')">✅ Tačno</button>
-            <button class="option-btn" data-value="Netačno" data-audio="${falseAudio ? '/uploads/' + this._esc(falseAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Netačno')">❌ Netačno</button>
-        </div>`;
+            <button class="option-btn" data-value="Tačno" data-correct="${q.correct_answer === 'Tačno' ? '1' : '0'}" data-audio="${trueAudio ? '/uploads/' + this._esc(trueAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Tačno')">✅ Tačno</button>
+            <button class="option-btn" data-value="Netačno" data-correct="${q.correct_answer === 'Netačno' ? '1' : '0'}" data-audio="${falseAudio ? '/uploads/' + this._esc(falseAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Netačno')">❌ Netačno</button>
+        </div>
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
     }
 
     _buildFillBlank(q) {
@@ -191,7 +195,8 @@ class QuizEngine {
                 data-audio="${this._findOptionAudioPath(q, i)}"
                 onclick="quiz._selectChoice(this, ${q.id})">${imgHtml}</button>`;
         });
-        html += '</div>';
+        html += `</div>
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -246,36 +251,60 @@ class QuizEngine {
 
     // ── Answer handlers ────────────────────────────
     _selectChoice(btn, qId) {
-        const q = this.questions[this.current];
         this._playAnswerAudio(btn.dataset.audio);
-        document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-        const correct = btn.dataset.correct === '1';
-        btn.classList.add(correct ? 'correct' : 'wrong');
-        if (correct) {
-            this.score += q.points;
-            this._feedback(true);
-        } else {
-            this._feedback(false);
-            // Show correct
-            document.querySelectorAll('.option-btn').forEach(b => { if (b.dataset.correct === '1') b.classList.add('correct'); });
-        }
-        this.answers.push({ question_id: qId, answer: btn.textContent.trim(), correct });
-        setTimeout(() => this._next(), 1500);
+        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        this.pendingSelection = {
+            qId,
+            answer: btn.textContent.trim(),
+            correct: btn.dataset.correct === '1',
+            button: btn
+        };
+        this._setConfirmEnabled(true);
     }
 
     _selectTF(btn, qId, value) {
-        const q       = this.questions[this.current];
-        const correct = value === q.correct_answer;
         this._playAnswerAudio(btn.dataset.audio);
-        document.querySelectorAll('.option-btn').forEach(b => {
-            b.disabled = true;
-            if (b.dataset.value === q.correct_answer) b.classList.add('correct');
-        });
-        if (!correct) btn.classList.add('wrong');
-        if (correct) this.score += q.points;
-        this._feedback(correct);
-        this.answers.push({ question_id: qId, answer: value, correct });
+        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        this.pendingSelection = {
+            qId,
+            answer: value,
+            correct: btn.dataset.correct === '1',
+            button: btn
+        };
+        this._setConfirmEnabled(true);
+    }
+
+    _confirmSelection(qId) {
+        const q = this.questions[this.current];
+        if (!this.pendingSelection || this.pendingSelection.qId !== qId) return;
+
+        const { answer, correct, button } = this.pendingSelection;
+        this.pendingSelection = null;
+
+        document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+        this._setConfirmEnabled(false);
+
+        if (correct) {
+            button.classList.add('correct');
+            this.score += q.points;
+            this._feedback(true);
+        } else {
+            button.classList.add('wrong');
+            this._feedback(false);
+            document.querySelectorAll('.option-btn').forEach(b => {
+                if (b.dataset.correct === '1') b.classList.add('correct');
+            });
+        }
+
+        this.answers.push({ question_id: qId, answer, correct });
         setTimeout(() => this._next(), 1500);
+    }
+
+    _setConfirmEnabled(enabled) {
+        const btn = document.getElementById('confirmSelectionBtn');
+        if (btn) btn.disabled = !enabled;
     }
 
     _submitFill(qId) {
