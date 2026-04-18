@@ -259,6 +259,9 @@ require_once __DIR__ . '/../includes/header.php';
     <?php else: ?>
     <form method="POST">
         <input type="hidden" name="action" value="submit">
+        <div class="d-flex gap-2 mb-3" style="justify-content:flex-end">
+            <button type="submit" class="btn btn-primary">Potvrdi odgovore →</button>
+        </div>
         <?php foreach ($currentQuestions as $i => $q): ?>
         <div class="card mb-3">
             <div class="card-body">
