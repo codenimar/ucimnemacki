@@ -312,7 +312,7 @@ class QuizEngine {
         }
 
         this.answers.push({ question_id: qId, answer, correct });
-        setTimeout(() => this._next(), 1500);
+        this._showContinueButton();
     }
 
     _setConfirmEnabled(enabled) {
@@ -335,7 +335,7 @@ class QuizEngine {
         if (correct) this.score += q.points;
         this._feedback(correct);
         this.answers.push({ question_id: qId, answer: val, correct });
-        setTimeout(() => this._next(), 1800);
+        this._showContinueButton();
     }
 
     _submitDrag(qId) {
@@ -351,7 +351,7 @@ class QuizEngine {
             if (fb) { fb.classList.remove('hidden'); fb.innerHTML = `<div class="alert alert-warning">Tačan redosled: <strong>${expected.join(' ')}</strong></div>`; }
         }
         this.answers.push({ question_id: qId, answer: words.join(' '), correct });
-        setTimeout(() => this._next(), 2000);
+        this._showContinueButton();
     }
 
     _submitMatching(qId) {
@@ -369,7 +369,27 @@ class QuizEngine {
         else this.score += Math.round(q.points * (right / pairs.length));
         this._feedback(correct);
         this.answers.push({ question_id: qId, answer: String(right) + '/' + pairs.length, correct });
-        setTimeout(() => this._next(), 2000);
+        this._showContinueButton();
+    }
+
+    _showContinueButton() {
+        if (!this.questionEl) return;
+        const existing = this.questionEl.querySelector('#nextQuestionBtn');
+        if (existing) return;
+
+        const isLast = this.current >= (this.total - 1);
+        const btn = document.createElement('button');
+        btn.id = 'nextQuestionBtn';
+        btn.className = 'btn btn-primary mt-3';
+        btn.textContent = isLast ? 'Završi test' : 'Sledeće pitanje';
+        btn.addEventListener('click', () => {
+            btn.disabled = true;
+            this._next();
+        });
+
+        const feedback = this.questionEl.querySelector('#feedbackBox');
+        if (feedback) feedback.insertAdjacentElement('afterend', btn);
+        else this.questionEl.appendChild(btn);
     }
 
     // ── Feedback ───────────────────────────────────
@@ -405,6 +425,7 @@ class QuizEngine {
 
     // ── Next question ──────────────────────────────
     _next() {
+        if (this.finished) return;
         this.current++;
         if (this.current >= this.total) this._finish();
         else this._showQuestion();
