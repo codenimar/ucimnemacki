@@ -136,7 +136,7 @@ class QuizEngine {
                 onclick="quiz._selectChoice(this, ${q.id})">${this._esc(opt.option_text)}</button>`;
         });
         html += `</div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi izabrani odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -147,7 +147,7 @@ class QuizEngine {
             <button class="option-btn" data-value="Tačno" data-audio="${trueAudio ? '/uploads/' + this._esc(trueAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Tačno')">✅ Tačno</button>
             <button class="option-btn" data-value="Netačno" data-audio="${falseAudio ? '/uploads/' + this._esc(falseAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Netačno')">❌ Netačno</button>
         </div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi izabrani odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
     }
 
     _buildFillBlank(q) {
@@ -196,7 +196,7 @@ class QuizEngine {
                 onclick="quiz._selectChoice(this, ${q.id})">${imgHtml}</button>`;
         });
         html += `</div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi izabrani odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -265,6 +265,7 @@ class QuizEngine {
     }
 
     _selectTF(btn, qId, value) {
+        const q = this.questions[this.current];
         this._playAnswerAudio(btn.dataset.audio);
         document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
