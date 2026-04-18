@@ -28,6 +28,7 @@ class QuizEngine {
         // Correct / wrong audio
         this.correctAudio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAA==');
         this.wrongAudio   = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAA==');
+        this.answerAudio  = new Audio();
 
         this._initTimer();
         this._showQuestion();
@@ -128,7 +129,9 @@ class QuizEngine {
     _buildChoices(q) {
         let html = '<div class="options-grid">';
         q.options?.forEach((opt, i) => {
+            const optionAudio = q.media ? q.media.find(m => m.display_context === 'option_audio_' + i && m.media_type === 'audio') : null;
             html += `<button class="option-btn" data-index="${i}" data-correct="${opt.is_correct}"
+                data-audio="${optionAudio ? '/uploads/' + this._esc(optionAudio.file_path) : ''}"
                 onclick="quiz._selectChoice(this, ${q.id})">${this._esc(opt.option_text)}</button>`;
         });
         html += '</div>';
@@ -136,9 +139,11 @@ class QuizEngine {
     }
 
     _buildTrueFalse(q) {
+        const trueAudio  = q.media ? q.media.find(m => m.display_context === 'tf_true' && m.media_type === 'audio') : null;
+        const falseAudio = q.media ? q.media.find(m => m.display_context === 'tf_false' && m.media_type === 'audio') : null;
         return `<div class="options-grid">
-            <button class="option-btn" data-value="Tačno"  onclick="quiz._selectTF(this, ${q.id}, 'Tačno')">✅ Tačno</button>
-            <button class="option-btn" data-value="Netačno" onclick="quiz._selectTF(this, ${q.id}, 'Netačno')">❌ Netačno</button>
+            <button class="option-btn" data-value="Tačno" data-audio="${trueAudio ? '/uploads/' + this._esc(trueAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Tačno')">✅ Tačno</button>
+            <button class="option-btn" data-value="Netačno" data-audio="${falseAudio ? '/uploads/' + this._esc(falseAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Netačno')">❌ Netačno</button>
         </div>`;
     }
 
@@ -180,10 +185,12 @@ class QuizEngine {
         let html = '<div class="options-grid">';
         q.options?.forEach((opt, i) => {
             const media = q.media ? q.media.find(m => m.display_context === 'option_' + i) : null;
+            const optionAudio = q.media ? q.media.find(m => m.display_context === 'option_audio_' + i && m.media_type === 'audio') : null;
             const imgHtml = media
                 ? `<img src="/uploads/${this._esc(media.file_path)}" alt="Opcija ${i + 1}" class="option-img">`
                 : `<span class="text-muted">Opcija ${i + 1}</span>`;
             html += `<button class="option-btn option-btn--image" data-index="${i}" data-correct="${opt.is_correct}"
+                data-audio="${optionAudio ? '/uploads/' + this._esc(optionAudio.file_path) : ''}"
                 onclick="quiz._selectChoice(this, ${q.id})">${imgHtml}</button>`;
         });
         html += '</div>';
@@ -242,6 +249,7 @@ class QuizEngine {
     // ── Answer handlers ────────────────────────────
     _selectChoice(btn, qId) {
         const q = this.questions[this.current];
+        this._playAnswerAudio(btn.dataset.audio);
         document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
         const correct = btn.dataset.correct === '1';
         btn.classList.add(correct ? 'correct' : 'wrong');
@@ -260,6 +268,7 @@ class QuizEngine {
     _selectTF(btn, qId, value) {
         const q       = this.questions[this.current];
         const correct = value === q.correct_answer;
+        this._playAnswerAudio(btn.dataset.audio);
         document.querySelectorAll('.option-btn').forEach(b => {
             b.disabled = true;
             if (b.dataset.value === q.correct_answer) b.classList.add('correct');
@@ -333,6 +342,16 @@ class QuizEngine {
         } else {
             el.innerHTML = '<div class="alert alert-error">❌ Netačno. Pokušaj ponovo na sledećem testu!</div>';
         }
+    }
+
+    _playAnswerAudio(path) {
+        if (!path) return;
+        try {
+            this.answerAudio.pause();
+            this.answerAudio.src = path;
+            this.answerAudio.currentTime = 0;
+            this.answerAudio.play().catch(() => {});
+        } catch (e) {}
     }
 
     // ── Next question ──────────────────────────────

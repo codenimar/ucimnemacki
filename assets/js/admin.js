@@ -60,6 +60,7 @@ document.getElementById('addOption')?.addEventListener('click', () => {
     row.className = 'option-row d-flex align-center gap-2 mb-2';
     row.innerHTML = `
         <input type="text" name="options[]" class="form-control" placeholder="Opcija ${optionCount}" required>
+        <input type="file" name="option_audio_files[]" class="form-control" accept="audio/*">
         <label class="d-flex align-center gap-1">
             <input type="radio" name="correct_option" value="${optionCount - 1}"> Tačan
         </label>
