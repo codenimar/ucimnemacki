@@ -375,12 +375,9 @@ class QuizEngine {
     _showContinueButton() {
         if (!this.questionEl) return;
         const existing = this.questionEl.querySelector('#nextQuestionBtn');
-        if (existing) {
-            existing.disabled = false;
-            return;
-        }
+        if (existing) existing.remove();
 
-        const isLast = this.current === (this.total - 1);
+        const isLast = this.current === this.total - 1;
         const btn = document.createElement('button');
         btn.id = 'nextQuestionBtn';
         btn.className = 'btn btn-primary mt-3';
