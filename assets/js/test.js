@@ -132,11 +132,12 @@ class QuizEngine {
         let html = '<div class="options-grid">';
         q.options?.forEach((opt, i) => {
             html += `<button class="option-btn" data-index="${i}" data-correct="${opt.is_correct}"
+                data-answer="${this._esc(opt.option_text)}"
                 data-audio="${this._findOptionAudioPath(q, i)}"
                 onclick="quiz._selectChoice(this, ${q.id})">${this._esc(opt.option_text)}</button>`;
         });
         html += `</div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -147,7 +148,7 @@ class QuizEngine {
             <button class="option-btn" data-value="Tačno" data-audio="${trueAudio ? '/uploads/' + this._esc(trueAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Tačno')">✅ Tačno</button>
             <button class="option-btn" data-value="Netačno" data-audio="${falseAudio ? '/uploads/' + this._esc(falseAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Netačno')">❌ Netačno</button>
         </div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
     }
 
     _buildFillBlank(q) {
@@ -192,11 +193,12 @@ class QuizEngine {
                 ? `<img src="/uploads/${this._esc(media.file_path)}" alt="Opcija ${i + 1}" class="option-img">`
                 : `<span class="text-muted">Opcija ${i + 1}</span>`;
             html += `<button class="option-btn option-btn--image" data-index="${i}" data-correct="${opt.is_correct}"
+                data-answer="${this._esc(opt.option_text)}"
                 data-audio="${this._findOptionAudioPath(q, i)}"
                 onclick="quiz._selectChoice(this, ${q.id})">${imgHtml}</button>`;
         });
         html += `</div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -261,7 +263,7 @@ class QuizEngine {
         this.pendingSelection = {
             type: 'choice',
             qId,
-            answer: btn.textContent.trim(),
+            answer: btn.dataset.answer || btn.textContent.trim(),
             correct: btn.dataset.correct === '1',
             button: btn
         };
@@ -315,10 +317,7 @@ class QuizEngine {
 
     _setConfirmEnabled(enabled) {
         const btn = document.getElementById('confirmSelectionBtn');
-        if (btn) {
-            btn.disabled = !enabled;
-            btn.setAttribute('aria-disabled', enabled ? 'false' : 'true');
-        }
+        if (btn) btn.disabled = !enabled;
     }
 
     _submitFill(qId) {
