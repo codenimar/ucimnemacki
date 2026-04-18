@@ -136,7 +136,7 @@ class QuizEngine {
                 onclick="quiz._selectChoice(this, ${q.id})">${this._esc(opt.option_text)}</button>`;
         });
         html += `</div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -147,7 +147,7 @@ class QuizEngine {
             <button class="option-btn" data-value="Tačno" data-audio="${trueAudio ? '/uploads/' + this._esc(trueAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Tačno')">✅ Tačno</button>
             <button class="option-btn" data-value="Netačno" data-audio="${falseAudio ? '/uploads/' + this._esc(falseAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Netačno')">❌ Netačno</button>
         </div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
     }
 
     _buildFillBlank(q) {
@@ -196,7 +196,7 @@ class QuizEngine {
                 onclick="quiz._selectChoice(this, ${q.id})">${imgHtml}</button>`;
         });
         html += `</div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -250,9 +250,13 @@ class QuizEngine {
     }
 
     // ── Answer handlers ────────────────────────────
+    _getOptionButtons() {
+        return this.questionEl ? this.questionEl.querySelectorAll('.option-btn') : [];
+    }
+
     _selectChoice(btn, qId) {
         this._playAnswerAudio(btn.dataset.audio);
-        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        this._getOptionButtons().forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
         this.pendingSelection = {
             type: 'choice',
@@ -267,7 +271,7 @@ class QuizEngine {
     _selectTF(btn, qId, value) {
         const q = this.questions[this.current];
         this._playAnswerAudio(btn.dataset.audio);
-        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        this._getOptionButtons().forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
         this.pendingSelection = {
             type: 'tf',
@@ -286,7 +290,7 @@ class QuizEngine {
         const { type, answer, correct, button } = this.pendingSelection;
         this.pendingSelection = null;
 
-        document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+        this._getOptionButtons().forEach(b => b.disabled = true);
         this._setConfirmEnabled(false);
 
         if (correct) {
@@ -296,7 +300,7 @@ class QuizEngine {
         } else {
             button.classList.add('wrong');
             this._feedback(false);
-            document.querySelectorAll('.option-btn').forEach(b => {
+            this._getOptionButtons().forEach(b => {
                 if (type === 'tf') {
                     if (b.dataset.value === q.correct_answer) b.classList.add('correct');
                 } else if (b.dataset.correct === '1') {
