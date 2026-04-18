@@ -136,7 +136,7 @@ class QuizEngine {
                 onclick="quiz._selectChoice(this, ${q.id})">${this._esc(opt.option_text)}</button>`;
         });
         html += `</div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi izabrani odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -144,10 +144,10 @@ class QuizEngine {
         const trueAudio  = q.media ? q.media.find(m => m.display_context === 'tf_true' && m.media_type === 'audio') : null;
         const falseAudio = q.media ? q.media.find(m => m.display_context === 'tf_false' && m.media_type === 'audio') : null;
         return `<div class="options-grid">
-            <button class="option-btn" data-value="Tačno" data-correct="${q.correct_answer === 'Tačno' ? '1' : '0'}" data-audio="${trueAudio ? '/uploads/' + this._esc(trueAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Tačno')">✅ Tačno</button>
-            <button class="option-btn" data-value="Netačno" data-correct="${q.correct_answer === 'Netačno' ? '1' : '0'}" data-audio="${falseAudio ? '/uploads/' + this._esc(falseAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Netačno')">❌ Netačno</button>
+            <button class="option-btn" data-value="Tačno" data-audio="${trueAudio ? '/uploads/' + this._esc(trueAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Tačno')">✅ Tačno</button>
+            <button class="option-btn" data-value="Netačno" data-audio="${falseAudio ? '/uploads/' + this._esc(falseAudio.file_path) : ''}" onclick="quiz._selectTF(this, ${q.id}, 'Netačno')">❌ Netačno</button>
         </div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi izabrani odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
     }
 
     _buildFillBlank(q) {
@@ -196,7 +196,7 @@ class QuizEngine {
                 onclick="quiz._selectChoice(this, ${q.id})">${imgHtml}</button>`;
         });
         html += `</div>
-        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
+        <button id="confirmSelectionBtn" class="btn btn-primary mt-3" disabled aria-disabled="true" aria-label="Potvrdi izabrani odgovor" onclick="quiz._confirmSelection(${q.id})">Potvrdi odgovor</button>`;
         return html;
     }
 
@@ -255,6 +255,7 @@ class QuizEngine {
         document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
         this.pendingSelection = {
+            type: 'choice',
             qId,
             answer: btn.textContent.trim(),
             correct: btn.dataset.correct === '1',
@@ -268,9 +269,10 @@ class QuizEngine {
         document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
         this.pendingSelection = {
+            type: 'tf',
             qId,
             answer: value,
-            correct: btn.dataset.correct === '1',
+            correct: value === q.correct_answer,
             button: btn
         };
         this._setConfirmEnabled(true);
@@ -280,7 +282,7 @@ class QuizEngine {
         const q = this.questions[this.current];
         if (!this.pendingSelection || this.pendingSelection.qId !== qId) return;
 
-        const { answer, correct, button } = this.pendingSelection;
+        const { type, answer, correct, button } = this.pendingSelection;
         this.pendingSelection = null;
 
         document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
@@ -294,7 +296,11 @@ class QuizEngine {
             button.classList.add('wrong');
             this._feedback(false);
             document.querySelectorAll('.option-btn').forEach(b => {
-                if (b.dataset.correct === '1') b.classList.add('correct');
+                if (type === 'tf') {
+                    if (b.dataset.value === q.correct_answer) b.classList.add('correct');
+                } else if (b.dataset.correct === '1') {
+                    b.classList.add('correct');
+                }
             });
         }
 
@@ -304,7 +310,10 @@ class QuizEngine {
 
     _setConfirmEnabled(enabled) {
         const btn = document.getElementById('confirmSelectionBtn');
-        if (btn) btn.disabled = !enabled;
+        if (btn) {
+            btn.disabled = !enabled;
+            btn.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+        }
     }
 
     _submitFill(qId) {
