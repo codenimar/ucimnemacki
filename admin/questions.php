@@ -49,11 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Clear old options
             $del = $db->prepare('DELETE FROM question_options WHERE question_id=?');
             $del->bind_param('i',$qId); $del->execute(); $del->close();
-            // For type 8: also clear old option images
-            if ($type === 8) {
-                $delMed = $db->prepare("DELETE FROM question_media WHERE question_id=? AND display_context LIKE 'option_%'");
-                $delMed->bind_param('i',$qId); $delMed->execute(); $delMed->close();
-            }
+            // Clear old option-related media (option images/audio and true/false answer audio)
+            $delMed = $db->prepare("DELETE FROM question_media WHERE question_id=? AND (display_context LIKE 'option_%' OR display_context IN ('tf_true','tf_false'))");
+            $delMed->bind_param('i',$qId); $delMed->execute(); $delMed->close();
             logAdminAction($adminId,'update','questions',$qId);
             $msg = 'Pitanje ažurirano.';
         } else {
@@ -73,6 +71,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $isCor   = ($i === $correctI) ? 1 : 0;
             $ins = $db->prepare('INSERT INTO question_options (question_id,option_text,is_correct,sort_order) VALUES (?,?,?,?)');
             $ins->bind_param('isii', $qId,$optText,$isCor,$i); $ins->execute(); $ins->close();
+
+            if (!empty($_FILES['option_audio_files']['name'][$i])) {
+                $file = [
+                    'name'     => $_FILES['option_audio_files']['name'][$i],
+                    'type'     => $_FILES['option_audio_files']['type'][$i],
+                    'tmp_name' => $_FILES['option_audio_files']['tmp_name'][$i],
+                    'error'    => $_FILES['option_audio_files']['error'][$i],
+                    'size'     => $_FILES['option_audio_files']['size'][$i],
+                ];
+                $path = uploadFile($file, 'audio');
+                if ($path) {
+                    $ctx = 'option_audio_' . $i;
+                    $ins = $db->prepare("INSERT INTO question_media (question_id,media_type,file_path,display_context) VALUES (?, 'audio', ?, ?)");
+                    $ins->bind_param('iss', $qId, $path, $ctx); $ins->execute(); $ins->close();
+                }
+            }
         }
 
         // Handle media upload
@@ -91,6 +105,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        // Type 7: true/false answer audio
+        if ($type === 7) {
+            if (!empty($_FILES['tf_audio_true']['name'])) {
+                $path = uploadFile($_FILES['tf_audio_true'], 'audio');
+                if ($path) {
+                    $ins = $db->prepare("INSERT INTO question_media (question_id,media_type,file_path,display_context) VALUES (?, 'audio', ?, 'tf_true')");
+                    $ins->bind_param('is', $qId, $path); $ins->execute(); $ins->close();
+                }
+            }
+            if (!empty($_FILES['tf_audio_false']['name'])) {
+                $path = uploadFile($_FILES['tf_audio_false'], 'audio');
+                if ($path) {
+                    $ins = $db->prepare("INSERT INTO question_media (question_id,media_type,file_path,display_context) VALUES (?, 'audio', ?, 'tf_false')");
+                    $ins->bind_param('is', $qId, $path); $ins->execute(); $ins->close();
+                }
+            }
+        }
+
         // Type 8: save 4 option records + option images
         if ($type === 8) {
             $correctImg = (int)($_POST['correct_option_img'] ?? 0);
@@ -102,7 +134,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             if (!empty($_FILES['option_images']['name'])) {
                 foreach ($_FILES['option_images']['name'] as $idx => $name) {
-                    if (!is_int($idx) || $idx < 0 || $idx > 3) continue;
+                    if (!is_numeric($idx)) continue;
+                    $idx = (int)$idx;
+                    if ($idx < 0 || $idx > 3) continue;
                     if (empty($name)) continue;
                     $file = [
                         'name'     => $_FILES['option_images']['name'][$idx],
@@ -116,6 +150,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $ctx = 'option_' . $idx;
                         $ins = $db->prepare('INSERT INTO question_media (question_id,media_type,file_path,display_context) VALUES (?,\'image\',?,?)');
                         $ins->bind_param('iss',$qId,$path,$ctx); $ins->execute(); $ins->close();
+                    }
+                }
+            }
+            if (!empty($_FILES['option_audio_images']['name'])) {
+                foreach ($_FILES['option_audio_images']['name'] as $idx => $name) {
+                    if (!is_numeric($idx)) continue;
+                    $idx = (int)$idx;
+                    if ($idx < 0 || $idx > 3) continue;
+                    if (empty($name)) continue;
+                    $file = [
+                        'name'     => $_FILES['option_audio_images']['name'][$idx],
+                        'type'     => $_FILES['option_audio_images']['type'][$idx],
+                        'tmp_name' => $_FILES['option_audio_images']['tmp_name'][$idx],
+                        'error'    => $_FILES['option_audio_images']['error'][$idx],
+                        'size'     => $_FILES['option_audio_images']['size'][$idx],
+                    ];
+                    $path = uploadFile($file, 'audio');
+                    if ($path) {
+                        $ctx = 'option_audio_' . $idx;
+                        $ins = $db->prepare("INSERT INTO question_media (question_id,media_type,file_path,display_context) VALUES (?, 'audio', ?, ?)");
+                        $ins->bind_param('iss', $qId, $path, $ctx); $ins->execute(); $ins->close();
                     }
                 }
             }
@@ -220,6 +275,7 @@ require_once __DIR__ . '/../includes/header.php';
                             <?php for ($i=0;$i<4;$i++): ?>
                             <div class="option-row d-flex align-center gap-2 mb-2">
                                 <input type="text" name="options[]" class="form-control" placeholder="Opcija <?= $i+1 ?>">
+                                <input type="file" name="option_audio_files[]" class="form-control" accept="audio/*">
                                 <label class="d-flex align-center gap-1" style="white-space:nowrap">
                                     <input type="radio" name="correct_option" value="<?= $i ?>" <?= $i===0?'checked':'' ?>> Tačan
                                 </label>
@@ -258,6 +314,16 @@ require_once __DIR__ . '/../includes/header.php';
                                 <option value="Netačno">Netačno</option>
                             </select>
                         </div>
+                        <div class="grid grid-2" style="gap:1rem">
+                            <div class="form-group">
+                                <label class="form-label">Audio za "Tačno" (opciono)</label>
+                                <input type="file" name="tf_audio_true" class="form-control" accept="audio/*">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Audio za "Netačno" (opciono)</label>
+                                <input type="file" name="tf_audio_false" class="form-control" accept="audio/*">
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Option Images (type 8: Tekst + 4 slike) -->
@@ -272,6 +338,7 @@ require_once __DIR__ . '/../includes/header.php';
                                 <label class="form-label">Opcija <?= $i+1 ?></label>
                                 <input type="file" name="option_images[]" class="form-control" accept="image/*" data-preview="optPreview<?= $i ?>">
                                 <div id="optPreview<?= $i ?>"></div>
+                                <input type="file" name="option_audio_images[]" class="form-control mt-1" accept="audio/*">
                             </div>
                         </div>
                         <?php endfor; ?>
