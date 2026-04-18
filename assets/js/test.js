@@ -348,7 +348,9 @@ class QuizEngine {
             this.answerAudio.pause();
             this.answerAudio.src = path;
             this.answerAudio.currentTime = 0;
-            this.answerAudio.play().catch(() => {});
+            this.answerAudio.play().catch((e) => {
+                console.debug('Answer audio play() rejected', e);
+            });
         } catch (e) {
             console.debug('Answer audio playback failed', e);
         }
